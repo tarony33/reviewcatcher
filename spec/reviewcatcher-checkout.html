@@ -1,0 +1,124 @@
+<!-- ReviewCatcher — checkout mockup v2. 4-tier aware (Enterprise routes to enquiry, not checkout). -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — ReviewCatcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#185FA5;--brand-deep:#0E3B66;--brand-light:#E6F1FB;--accent:#378ADD;--star:#FFB800;--ink:#0C1B2A;--muted:#586A7A;--paper:#FFFFFF;--paper-2:#F4F9FD;--line:#E1EBF4;--pos:#1B9C6B;--display:'Bricolage Grotesque',sans-serif;--body:'Figtree',sans-serif;--mono:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--body);color:var(--ink);background:var(--paper-2);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.02em}
+.topbar{background:#fff;border-bottom:1px solid var(--line)}
+.topbar .in{max-width:1040px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:.55rem;font-family:var(--display);font-weight:800;font-size:1.15rem;color:var(--brand-deep)}
+.secure{font-family:var(--mono);font-size:.74rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+.grid{max-width:1040px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px}
+.card + .card{margin-top:20px}
+.step-lbl{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+h2.sh{font-size:1.35rem;margin-bottom:4px}
+.field{margin-bottom:14px}.field label{display:block;font-size:.82rem;font-weight:600;margin-bottom:5px}
+.field input{width:100%;padding:.78rem .9rem;border:1.5px solid var(--line);border-radius:11px;font-family:var(--body);font-size:.97rem}
+.field input:focus{outline:none;border-color:var(--accent)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pm-row{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
+.pm{border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.78rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px;background:var(--paper-2)}
+.stripe-mount{border:1.5px dashed var(--line);border-radius:12px;padding:26px;text-align:center;color:var(--muted);font-size:.9rem;margin-top:8px;background:var(--paper-2)}
+.stripe-mount .mono{font-family:var(--mono);font-size:.72rem;margin-top:6px;color:#9fb2c2}
+.consent-block{background:var(--brand-light);border:1px solid #cfe2f5;border-radius:12px;padding:18px 20px;margin-top:6px}
+.chk{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;font-size:.9rem}
+.chk:last-child{margin-bottom:0}
+.chk input{width:20px;height:20px;margin-top:2px;flex-shrink:0;accent-color:var(--brand);cursor:pointer}
+.chk label{cursor:pointer}.chk a{text-decoration:underline}
+.pill-note{font-family:var(--mono);font-size:.68rem;color:var(--muted);margin-top:2px}
+.summary{position:sticky;top:24px}
+.plan-pick{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.plan-pick .pn{font-family:var(--display);font-weight:800;font-size:1.4rem;color:var(--brand-deep)}
+.plan-pick a{font-size:.78rem}
+.plan-tag{color:var(--muted);font-size:.88rem;margin-bottom:18px}
+.line{display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid var(--line);font-size:.95rem}
+.line.total{border-top:2px solid var(--ink);font-family:var(--display);font-weight:800;font-size:1.15rem;margin-top:4px}
+.line .mut{color:var(--muted)}
+.paybtn{width:100%;margin-top:18px;background:var(--brand);color:#fff;border:0;border-radius:999px;padding:1rem;font-family:var(--body);font-weight:600;font-size:1.05rem;cursor:pointer;transition:opacity .2s}
+.paybtn:disabled{opacity:.45;cursor:not-allowed}
+.trust{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:16px;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.toggle{display:flex;background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:18px;font-size:.85rem}
+.toggle button{flex:1;border:0;background:none;padding:.5rem;border-radius:999px;cursor:pointer;font-family:var(--body);font-weight:600;color:var(--muted)}
+.toggle button.on{background:#fff;color:var(--brand);box-shadow:0 2px 6px rgba(14,59,102,.1)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}.summary{position:static}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <span class="logo"><svg width="26" height="26" viewBox="0 0 30 30" fill="none"><rect x="1" y="2" width="28" height="21" rx="7" fill="#185FA5"/><path d="M9 23l-3 5 8-4z" fill="#185FA5"/><g fill="#FFB800"><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2.4"/><circle cx="21" cy="12" r="2"/></g></svg> ReviewCatcher</span>
+  <span class="secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Secure checkout · powered by Stripe</span>
+</div></div>
+<div class="grid">
+  <div>
+    <div class="card">
+      <div class="step-lbl">1 · Your details</div><h2 class="sh">Where should we set things up?</h2><div style="height:14px"></div>
+      <div class="field"><label>Business name</label><input type="text" placeholder="e.g. Rush Strength & Fitness"></div>
+      <div class="two"><div class="field"><label>Your name</label><input type="text" placeholder="John Murphy"></div><div class="field"><label>Contact number</label><input type="tel" placeholder="08x xxx xxxx"></div></div>
+      <div class="field"><label>Email</label><input type="email" placeholder="you@business.ie"></div>
+    </div>
+    <div class="card">
+      <div class="step-lbl">2 · Payment</div><h2 class="sh">Choose how you'd like to pay</h2>
+      <div class="pm-row"><span class="pm">💳 Card</span><span class="pm"> Apple Pay</span><span class="pm">G Pay</span><span class="pm">SEPA Direct Debit</span><span class="pm">iDEAL</span><span class="pm">Bancontact</span></div>
+      <div class="stripe-mount">Stripe's secure payment fields load here.<br><span class="mono">Card data never touches ReviewCatcher — handled entirely by Stripe (PCI-compliant).</span></div>
+    </div>
+    <div class="card">
+      <div class="step-lbl">3 · Before we start</div><h2 class="sh">A couple of quick confirmations</h2><div style="height:14px"></div>
+      <div class="consent-block">
+        <div class="chk"><input type="checkbox" id="c1" onchange="gate()"><label for="c1">I agree to ReviewCatcher's <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a> and <a href="#">Data Processing Agreement</a>.</label></div>
+        <div class="chk"><input type="checkbox" id="c2" onchange="gate()"><label for="c2">I confirm I have permission to contact the customers I'll upload (they're existing customers or have opted in).<div class="pill-note">This keeps your first campaign compliant with GDPR & ePrivacy rules.</div></label></div>
+      </div>
+    </div>
+  </div>
+  <div class="summary"><div class="card">
+    <div class="plan-pick"><span class="pn" id="planName">Mid</span><a href="reviewcatcher-mockup.html#offer">Change</a></div>
+    <div class="plan-tag" id="planTag">Everything on autopilot.</div>
+    <div class="toggle"><button class="on" id="tMonthly" onclick="setCycle('monthly')">Monthly</button><button id="tAnnual" onclick="setCycle('annual')">Annual · save ~2 months</button></div>
+    <div class="line"><span class="mut" id="subLbl">Mid plan (monthly)</span><span id="subAmt">€279</span></div>
+    <div class="line"><span class="mut">One-off setup & kickstart</span><span id="setupAmt">€249</span></div>
+    <div class="line total"><span>Due today</span><span id="dueToday">€528</span></div>
+    <div class="line" style="border:0;padding-top:6px"><span class="mut" id="thenLine">then €279 / month · cancel anytime</span><span></span></div>
+    <button class="paybtn" id="pay" disabled>Complete purchase</button>
+    <div class="trust"><span>🔒 Secured by Stripe</span><span>No lock-in</span><span>GDPR compliant</span></div>
+  </div></div>
+</div>
+<script>
+var plans={
+  basic:{name:'Basic',tag:'The essentials to start climbing.',monthly:149,annual:1490,setup:199},
+  mid:{name:'Mid',tag:'Everything on autopilot.',monthly:279,annual:2790,setup:249},
+  premium:{name:'Premium',tag:'For multi-location businesses.',monthly:499,annual:4990,setup:0}
+};
+var params=new URLSearchParams(location.search);
+var key=(params.get('plan')||'mid').toLowerCase();
+if(key==='enterprise'){location.href='reviewcatcher-mockup.html#start';}
+if(!plans[key])key='mid';
+var cycle='monthly';
+function money(n){return '€'+n.toLocaleString();}
+function render(){
+  var p=plans[key];
+  document.getElementById('planName').textContent=p.name;
+  document.getElementById('planTag').textContent=p.tag;
+  var isM=cycle==='monthly',recurring=isM?p.monthly:p.annual;
+  document.getElementById('subLbl').textContent=p.name+' plan ('+cycle+')';
+  document.getElementById('subAmt').textContent=money(recurring);
+  document.getElementById('setupAmt').textContent=p.setup?money(p.setup):'Included';
+  document.getElementById('dueToday').textContent=money(recurring+p.setup);
+  document.getElementById('thenLine').textContent=isM?'then '+money(p.monthly)+' / month · cancel anytime':'then '+money(p.annual)+' / year · cancel anytime';
+  document.getElementById('tMonthly').classList.toggle('on',isM);
+  document.getElementById('tAnnual').classList.toggle('on',!isM);
+}
+function setCycle(c){cycle=c;render();}
+function gate(){document.getElementById('pay').disabled=!(document.getElementById('c1').checked&&document.getElementById('c2').checked);}
+render();
+</script>
+</body>
+</html>

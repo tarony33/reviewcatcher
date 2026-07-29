@@ -6,13 +6,19 @@ export default {
       colors: {
         brand: {
           DEFAULT: "var(--brand)",
+          deep: "var(--brand-deep)",
           light: "var(--brand-light)",
-          accent: "var(--brand-accent)",
         },
-        star: {
-          DEFAULT: "var(--star)",
-          deep: "var(--star-deep)",
+        accent: "var(--accent)",
+        star: "var(--star)",
+        ink: "var(--ink)",
+        muted: "var(--muted)",
+        paper: {
+          DEFAULT: "var(--paper)",
+          2: "var(--paper-2)",
         },
+        line: "var(--line)",
+        pos: "var(--pos)",
       },
     },
   },

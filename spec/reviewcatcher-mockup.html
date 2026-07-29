@@ -1,0 +1,329 @@
+<!-- ReviewCatcher — landing mockup v3. 4 tiers (Basic/Mid/Premium/Enterprise-Enquire), image&social parked, AI replies Mid+, conditioned guarantee. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReviewCatcher | Get More Google Reviews — for Businesses Across Ireland</title>
+<meta name="description" content="ReviewCatcher gets your happy customers to leave 5-star Google reviews automatically, and replies to every review. Automated review management for businesses across Ireland.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#185FA5;--brand-deep:#0E3B66;--brand-light:#E6F1FB;--accent:#378ADD;--star:#FFB800;--ink:#0C1B2A;--muted:#586A7A;--paper:#FFFFFF;--paper-2:#F4F9FD;--line:#E1EBF4;--pos:#1B9C6B;--display:'Bricolage Grotesque',sans-serif;--body:'Figtree',sans-serif;--mono:'JetBrains Mono',monospace;--wrap:1160px;--r:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--display);line-height:1.05;letter-spacing:-.02em;font-weight:700}
+.eyebrow{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--body);font-weight:600;font-size:1rem;padding:.85rem 1.5rem;border-radius:999px;border:0;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 8px 24px -8px rgba(24,95,165,.6)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-ghost{background:#fff;color:var(--brand);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hdr{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.logo{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--brand-deep)}
+.nav{display:flex;align-items:center;gap:2rem}
+.nav a{font-size:.95rem;color:var(--muted);font-weight:500}.nav a:hover{color:var(--ink)}
+.nav .btn{padding:.6rem 1.15rem;font-size:.92rem}
+@media(max-width:820px){.nav a:not(.btn){display:none}}
+.hero{background:linear-gradient(180deg,var(--paper),var(--paper-2));padding:72px 0 84px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(2.5rem,5vw,3.9rem);font-weight:800}
+.hero h1 .hl{color:var(--brand)}
+.hero p.sub{font-size:1.2rem;color:var(--muted);margin:1.25rem 0 2rem;max-width:34ch}
+.hero-cta{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.hero .micro{font-family:var(--mono);font-size:.78rem;color:var(--muted);margin-top:1.15rem;display:flex;align-items:center;gap:.5rem}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 4px rgba(27,156,107,.15)}
+.stage{position:relative;display:flex;justify-content:center}
+.phone{width:300px;background:#fff;border-radius:34px;padding:14px;box-shadow:0 30px 60px -20px rgba(14,59,102,.4),0 0 0 1px var(--line);position:relative}
+.screen{background:var(--paper-2);border-radius:24px;padding:18px 14px;min-height:440px}
+.chatline{font-family:var(--mono);font-size:.62rem;color:var(--muted);text-align:center;margin-bottom:14px}
+.bubble{max-width:80%;padding:10px 13px;border-radius:16px;font-size:.85rem;margin-bottom:10px;opacity:0;transform:translateY(8px);animation:rise .5s forwards}
+.bubble.them{background:var(--brand);color:#fff;border-bottom-left-radius:5px}
+.bubble.me{background:#fff;border:1px solid var(--line);margin-left:auto;border-bottom-right-radius:5px}
+.bubble.b2{animation-delay:.5s}.bubble.b3{animation-delay:1.05s}
+.rev-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:6px;opacity:0;transform:translateY(8px);animation:rise .5s 1.6s forwards}
+.rev-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--brand-light);display:grid;place-items:center;font-family:var(--display);font-weight:700;color:var(--brand);font-size:.85rem}
+.rev-name{font-weight:600;font-size:.82rem}
+.stars{display:flex;gap:2px}.stars svg{width:15px;height:15px}
+.rev-txt{font-size:.78rem;color:var(--muted)}
+.counter{position:absolute;bottom:-22px;right:-14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:0 16px 30px -12px rgba(14,59,102,.3);text-align:center}
+.counter .n{font-family:var(--display);font-weight:800;font-size:1.7rem;color:var(--brand);line-height:1}
+.counter .l{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:3px}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:44px}.hero{padding:48px 0 60px}.hero p.sub{max-width:none}.counter{right:0}}
+.strip{background:var(--brand-deep);color:#cfe2f5;padding:16px 0}
+.strip .wrap{display:flex;gap:36px;justify-content:center;flex-wrap:wrap;font-family:var(--mono);font-size:.8rem}
+.strip b{color:#fff}
+section{padding:88px 0}
+.sec-head{max-width:56ch;margin-bottom:52px}
+.sec-head h2{font-size:clamp(2rem,3.6vw,2.8rem);margin:.6rem 0 1rem}
+.sec-head p{font-size:1.12rem;color:var(--muted)}
+.center{margin-left:auto;margin-right:auto;text-align:center}
+.problem{background:var(--paper-2)}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px}
+.pcard .ico{width:44px;height:44px;border-radius:12px;background:var(--brand-light);display:grid;place-items:center;margin-bottom:16px;color:var(--brand)}
+.pcard h3{font-size:1.2rem;margin-bottom:.5rem}.pcard p{color:var(--muted);font-size:.98rem}
+@media(max-width:820px){.pgrid{grid-template-columns:1fr}}
+.how{background:linear-gradient(180deg,var(--brand-deep),var(--brand));color:#fff}
+.how .sec-head p{color:#bcd6ef}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:28px}
+.step .num{font-family:var(--mono);font-size:.8rem;color:var(--star);letter-spacing:.1em;margin-bottom:14px}
+.step h3{font-size:1.35rem;margin-bottom:.55rem}.step p{color:#cfe0f2;font-size:.97rem}
+.autoline{text-align:center;margin-top:36px;font-family:var(--mono);font-size:.85rem;color:#bcd6ef}
+.autoline b{color:#fff}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.fcard{border:1px solid var(--line);border-radius:var(--r);padding:24px;transition:border-color .2s}
+.fcard:hover{border-color:var(--accent)}
+.fcard .ico{width:40px;height:40px;border-radius:10px;background:var(--brand-light);color:var(--brand);display:grid;place-items:center;margin-bottom:14px}
+.fcard h3{font-size:1.08rem;margin-bottom:.4rem}.fcard p{font-size:.93rem;color:var(--muted)}
+@media(max-width:820px){.fgrid{grid-template-columns:1fr}}
+/* 4 tiers */
+.offer{background:var(--paper-2)}
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start}
+.tier{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 20px;display:flex;flex-direction:column;position:relative}
+.tier.feat{border:2px solid var(--brand);box-shadow:0 26px 50px -24px rgba(14,59,102,.3)}
+.tier .badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--star);color:var(--ink);font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:999px;white-space:nowrap}
+.tier .tname{font-family:var(--display);font-weight:800;font-size:1.2rem}
+.tier .ttag{color:var(--muted);font-size:.84rem;margin:.3rem 0 1rem;min-height:3.4em}
+.tier .tprice{font-family:var(--display);font-weight:800;font-size:2rem;color:var(--brand-deep)}
+.tier .tprice small{font-size:.85rem;font-weight:500;color:var(--muted)}
+.tier .tprice.enq{font-size:1.5rem}
+.tier .tsetup{font-family:var(--mono);font-size:.68rem;color:var(--muted);margin-top:5px;margin-bottom:18px;min-height:1.2em}
+.tier ul{list-style:none;display:grid;gap:9px;margin-bottom:22px;flex-grow:1}
+.tier li{display:flex;gap:8px;align-items:flex-start;font-size:.86rem}
+.tick{color:var(--pos);flex-shrink:0;margin-top:2px}
+.tier .btn{width:100%;justify-content:center;font-size:.92rem;padding:.75rem}
+.annual{text-align:center;font-family:var(--mono);font-size:.78rem;color:var(--muted);margin-top:26px}
+@media(max-width:960px){.tiers{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.tiers{grid-template-columns:1fr}.tier .ttag,.tier .tsetup{min-height:0}}
+.guar{background:linear-gradient(135deg,#0E3B66,#185FA5);color:#fff;border-radius:22px;padding:44px;display:flex;gap:26px;align-items:center}
+.guar .seal{flex-shrink:0;width:84px;height:84px;border-radius:50%;background:rgba(255,184,0,.15);border:2px solid var(--star);display:grid;place-items:center;color:var(--star)}
+.guar h3{font-size:1.7rem;margin-bottom:.5rem}.guar p{color:#cfe2f5;font-size:1.05rem}
+.guar .cond{font-family:var(--mono);font-size:.72rem;color:#9fc0e2;margin-top:10px}
+@media(max-width:640px){.guar{flex-direction:column;text-align:center;padding:32px}}
+.lead{background:var(--brand-deep);color:#fff}
+.lead .wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.lead h2{font-size:clamp(2rem,3.6vw,2.7rem);margin:.6rem 0 1rem}
+.lead .sub{color:#bcd6ef;font-size:1.1rem;max-width:40ch}
+.lead .towns{font-family:var(--mono);font-size:.76rem;color:#7fa8cf;margin-top:1.4rem;line-height:1.9}
+.formcard{background:#fff;border-radius:20px;padding:30px;color:var(--ink)}
+.formcard h3{font-size:1.25rem;margin-bottom:.4rem}
+.formcard .fsub{color:var(--muted);font-size:.92rem;margin-bottom:20px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.82rem;font-weight:600;margin-bottom:5px}
+.field input{width:100%;padding:.8rem .9rem;border:1.5px solid var(--line);border-radius:11px;font-family:var(--body);font-size:.98rem}
+.field input:focus{outline:none;border-color:var(--accent)}
+.consent{font-size:.78rem;color:var(--muted);margin:6px 0 16px;line-height:1.5}
+.consent a{color:var(--brand);text-decoration:underline}
+.formcard .btn{width:100%;justify-content:center}
+.thanks{display:none;text-align:center;padding:20px 0}
+.thanks .tk{width:54px;height:54px;border-radius:50%;background:rgba(27,156,107,.12);color:var(--pos);display:grid;place-items:center;margin:0 auto 14px}
+@media(max-width:820px){.lead .wrap{grid-template-columns:1fr;gap:34px}}
+.faq details{border-bottom:1px solid var(--line);padding:20px 0}
+.faq summary{font-family:var(--display);font-weight:700;font-size:1.12rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{color:var(--accent);font-size:1.5rem;transition:transform .2s;flex-shrink:0}
+.faq details[open] summary .plus{transform:rotate(45deg)}
+.faq p{color:var(--muted);margin-top:12px;font-size:.99rem;max-width:70ch}
+footer{background:var(--brand-deep);color:#aecbe6;padding:56px 0 30px;font-size:.92rem}
+.fgrid2{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px;margin-bottom:36px}
+footer .logo{color:#fff;margin-bottom:12px}
+footer h4{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#7fa8cf;margin-bottom:14px}
+footer a{display:block;margin-bottom:9px;color:#cfe2f5}footer a:hover{color:#fff}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:20px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:#7fa8cf;font-size:.82rem}
+@media(max-width:760px){.fgrid2{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.bubble,.rev-card{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="hdr"><div class="wrap">
+  <a class="logo" href="#"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"><rect x="1" y="2" width="28" height="21" rx="7" fill="#185FA5"/><path d="M9 23l-3 5 8-4z" fill="#185FA5"/><g fill="#FFB800"><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2.4"/><circle cx="21" cy="12" r="2"/></g></svg> ReviewCatcher</a>
+  <nav class="nav"><a href="#how">How it works</a><a href="#offer">Pricing</a><a href="#faq">FAQ</a><a class="btn btn-primary" href="#start">Get started</a></nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <div>
+    <span class="eyebrow">Automated Google reviews · across Ireland</span>
+    <h1>More <span class="hl">5-star reviews</span>. On autopilot.</h1>
+    <p class="sub">ReviewCatcher asks every happy customer for a review automatically, chases the ones who forget, and replies to every review — so you never have to think about it.</p>
+    <div class="hero-cta"><a class="btn btn-primary" href="#start">Get my free review audit →</a><a class="btn btn-ghost" href="#offer">See pricing</a></div>
+    <div class="micro"><span class="dot"></span> No lock-in · Cancel anytime · 30-day review guarantee</div>
+  </div>
+  <div class="stage"><div class="phone">
+    <div class="screen">
+      <div class="chatline">Today · sent automatically after the job</div>
+      <div class="bubble them b1">Hi Sarah — thanks for coming in today! If you've a spare 20 seconds, we'd love a quick review 🙏 [tap here]</div>
+      <div class="bubble me b2">Done! ⭐️⭐️⭐️⭐️⭐️</div>
+      <div class="bubble them b3">You're a legend — thank you! 💙</div>
+      <div class="rev-card"><div class="rev-top"><div class="avatar">S</div><div><div class="rev-name">Sarah M.</div><div class="stars">
+        <svg viewBox="0 0 24 24" fill="#FFB800"><path d="M12 2l3 6.5 7 .6-5.3 4.6L18.2 21 12 17.3 5.8 21l1.5-7.3L2 9.1l7-.6z"/></svg><svg viewBox="0 0 24 24" fill="#FFB800"><path d="M12 2l3 6.5 7 .6-5.3 4.6L18.2 21 12 17.3 5.8 21l1.5-7.3L2 9.1l7-.6z"/></svg><svg viewBox="0 0 24 24" fill="#FFB800"><path d="M12 2l3 6.5 7 .6-5.3 4.6L18.2 21 12 17.3 5.8 21l1.5-7.3L2 9.1l7-.6z"/></svg><svg viewBox="0 0 24 24" fill="#FFB800"><path d="M12 2l3 6.5 7 .6-5.3 4.6L18.2 21 12 17.3 5.8 21l1.5-7.3L2 9.1l7-.6z"/></svg><svg viewBox="0 0 24 24" fill="#FFB800"><path d="M12 2l3 6.5 7 .6-5.3 4.6L18.2 21 12 17.3 5.8 21l1.5-7.3L2 9.1l7-.6z"/></svg>
+      </div></div></div><div class="rev-txt">"Brilliant service, couldn't recommend them more. Quick, friendly and spotless."</div></div>
+    </div>
+    <div class="counter"><div class="n" id="cnt">18</div><div class="l">reviews this month</div></div>
+  </div></div>
+</div></section>
+
+<div class="strip"><div class="wrap">
+  <span><b>93%</b> of customers check reviews first</span><span><b>1 tap</b> to leave a review</span><span><b>30-day</b> review guarantee</span>
+</div></div>
+
+<section class="problem"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">The gap</span><h2>Your best customers love you. They just never say it publicly.</h2><p>You do great work and your regulars are loyal — but when a new customer searches, they see a competitor with 200 reviews and pick them instead.</p></div>
+  <div class="pgrid">
+    <div class="pcard"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6.5 7 .6-5.3 4.6L18.2 21 12 17.3 5.8 21l1.5-7.3L2 9.1l7-.6z"/></svg></div><h3>Too few reviews</h3><p>Lots of happy customers, barely any reviews to show for it — so you prove yourself to every new lead from scratch.</p></div>
+    <div class="pcard"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>No time to chase</h3><p>You're wearing every hat already. Asking each customer, every time, is a job nobody has time to do by hand.</p></div>
+    <div class="pcard"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div><h3>Invisible on Google</h3><p>Ideal customers choose the competition purely on reviews. You do better work — they just can't see it yet.</p></div>
+  </div>
+</div></section>
+
+<section class="how" id="how"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow" style="color:var(--star)">How it works</span><h2>The system you set up once, then forget.</h2><p>Three steps to a steady flow of reviews running quietly in the background.</p></div>
+  <div class="steps">
+    <div class="step"><div class="num">STEP 01</div><h3>Connect</h3><p>We link ReviewCatcher to how you already work — your booking system, or a simple list. Every finished job or visit becomes a trigger.</p></div>
+    <div class="step"><div class="num">STEP 02</div><h3>Launch</h3><p>A friendly, personalised request goes out by text, branded as you. One tap takes your customer straight to your Google page.</p></div>
+    <div class="step"><div class="num">STEP 03</div><h3>Automate</h3><p>Gentle reminders catch the ones who forget, and every review gets a reply — automatically. You focus on the work; your reputation grows.</p></div>
+  </div>
+  <div class="autoline">Every customer asked the same way. <b>No gating, no filtering — fully within Google's rules.</b></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">What's running for you</span><h2>Everything you'd do by hand — done automatically.</h2></div>
+  <div class="fgrid">
+    <div class="fcard"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Personalised requests</h3><p>Each ask uses the customer's name, so it feels personal — and gets far more replies.</p></div>
+    <div class="fcard"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></div><h3>Instant trigger</h3><p>The moment a job's marked done, the request is on its way. No button to press.</p></div>
+    <div class="fcard"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg></div><h3>AI review replies</h3><p>Every review gets a prompt, professional response — which Google rewards and customers notice. (Mid tier and up.)</p></div>
+    <div class="fcard"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.3 2.6L3 8"/><path d="M3 3v5h5"/></svg></div><h3>Smart follow-ups</h3><p>Most people mean to and forget. One well-timed nudge brings in the reviews you'd otherwise lose.</p></div>
+    <div class="fcard"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Reactivation campaign</h3><p>A one-off send to your existing customers turns people who already know you into a wave of reviews in week one.</p></div>
+  </div>
+</div></section>
+
+<!-- PRICING: 4 tiers -->
+<section class="offer" id="offer"><div class="wrap">
+  <div class="sec-head center"><span class="eyebrow">Simple pricing</span><h2>Pick the level that fits. Move up any time.</h2></div>
+  <div class="tiers">
+    <div class="tier">
+      <div class="tname">Basic</div>
+      <div class="ttag">The essentials to start climbing. Single location, sole traders.</div>
+      <div class="tprice">€149<small>/mo</small></div>
+      <div class="tsetup">+ €199 setup · no lock-in</div>
+      <ul>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Automated review requests</li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Smart follow-up reminders</li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> One reactivation campaign</li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Up to 50 requests / month</li>
+      </ul>
+      <a class="btn btn-ghost" href="reviewcatcher-checkout.html?plan=basic">Choose Basic</a>
+    </div>
+    <div class="tier feat">
+      <div class="badge">Most popular</div>
+      <div class="tname">Mid</div>
+      <div class="ttag">Everything on autopilot. Single location, established businesses.</div>
+      <div class="tprice">€279<small>/mo</small></div>
+      <div class="tsetup">+ €249 setup & kickstart</div>
+      <ul>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> <b>Everything in Basic, plus:</b></li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> AI replies to every review</li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Up to 150 requests / month</li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Priority support</li>
+      </ul>
+      <a class="btn btn-primary" href="reviewcatcher-checkout.html?plan=mid">Choose Mid</a>
+    </div>
+    <div class="tier">
+      <div class="tname">Premium</div>
+      <div class="ttag">For multi-location businesses. Everything, across all your sites.</div>
+      <div class="tprice">€499<small>/mo</small></div>
+      <div class="tsetup">setup included · no lock-in</div>
+      <ul>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> <b>Everything in Mid, plus:</b></li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Up to 5 locations</li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Consolidated reporting</li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Higher request volume</li>
+      </ul>
+      <a class="btn btn-ghost" href="reviewcatcher-checkout.html?plan=premium">Choose Premium</a>
+    </div>
+    <div class="tier">
+      <div class="tname">Enterprise</div>
+      <div class="ttag">Franchises, groups & agencies. Custom scope, built around you.</div>
+      <div class="tprice enq">Enquire</div>
+      <div class="tsetup">priced on application</div>
+      <ul>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> <b>Everything in Premium, plus:</b></li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Unlimited locations</li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Dedicated account manager</li>
+        <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Monthly strategy call</li>
+      </ul>
+      <a class="btn btn-ghost" href="#start">Talk to us</a>
+    </div>
+  </div>
+  <div class="annual">All plans month-to-month. Prefer to save? Pay annually and get roughly 2 months free.</div>
+</div></section>
+
+<section><div class="wrap"><div class="guar">
+  <div class="seal"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V5z"/><path d="M9 12l2 2 4-4"/></svg></div>
+  <div><h3>Reviews in 30 days, or your setup is free.</h3><p>If you don't get a single new review in your first 30 days, we refund your setup fee in full. We only win when your rating does.</p><div class="cond">Applies where you provide at least 50 contactable past customers you have permission to message.</div></div>
+</div></div></section>
+
+<section class="lead" id="start"><div class="wrap">
+  <div>
+    <span class="eyebrow" style="color:var(--star)">Get started</span>
+    <h2>See how many reviews you're leaving on the table.</h2>
+    <p class="sub">Leave your details and we'll call you back with a free review audit — where you stand against nearby competitors, and exactly what ReviewCatcher would do for you. If it's a fit, you can be live the same week.</p>
+    <div class="towns">Serving businesses across Ireland — Dublin · Cork · Galway · Limerick · Waterford · Kilkenny · Drogheda · and nationwide.</div>
+  </div>
+  <div class="formcard" id="formcard">
+    <div id="formview">
+      <h3>Request your free review audit</h3>
+      <p class="fsub">No obligation. We'll call you back, usually same day.</p>
+      <div class="field"><label for="biz">Business name</label><input id="biz" type="text" placeholder="e.g. Rush Strength & Fitness"></div>
+      <div class="field"><label for="nm">Your name</label><input id="nm" type="text" placeholder="e.g. John Murphy"></div>
+      <div class="field"><label for="ph">Contact number</label><input id="ph" type="tel" placeholder="08x xxx xxxx"></div>
+      <div class="field"><label for="em">Email</label><input id="em" type="email" placeholder="you@business.ie"></div>
+      <p class="consent">By submitting, you agree to us contacting you about ReviewCatcher and to our <a href="#">Privacy Policy</a>. We never share your details.</p>
+      <button class="btn btn-primary" onclick="submitLead()">Request my free audit →</button>
+    </div>
+    <div class="thanks" id="thanks">
+      <div class="tk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <h3>Got it — talk soon.</h3><p class="fsub">We'll be in touch shortly with your free review audit.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="faq" id="faq"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">Questions</span><h2>Everything you need to know.</h2></div>
+  <details open><summary>Do you need my Google login?<span class="plus">+</span></summary><p>Never. You add ReviewCatcher as a Manager on your Google Business Profile — a 30-second step you do yourself. We reply to reviews on your behalf without ever seeing your password, and you can remove our access any time.</p></details>
+  <details><summary>Is it against Google's rules to ask for reviews?<span class="plus">+</span></summary><p>No. Asking is allowed and encouraged. What breaks the rules is incentivising reviews or only asking your happy customers. We ask every customer the same way, with no incentive — fully within Google's guidelines.</p></details>
+  <details><summary>How is my customers' data protected?<span class="plus">+</span></summary><p>Your customer list stays yours. We only ever use it to send review requests on your behalf, under a signed Data Processing Agreement, in line with GDPR. It's never sold or used for anything else, and every message has a one-tap opt-out.</p></details>
+  <details><summary>Do you work with businesses outside Dublin?<span class="plus">+</span></summary><p>Yes — ReviewCatcher works for businesses right across Ireland, and multi-location groups too. Because it runs remotely, we can set you up wherever you're based.</p></details>
+  <details><summary>Is there a lock-in contract?<span class="plus">+</span></summary><p>Never. Every plan is month-to-month. We want you to stay because you're winning more customers, not because a contract makes you.</p></details>
+</div></div></section>
+
+<footer><div class="wrap">
+  <div class="fgrid2">
+    <div><div class="logo"><svg width="26" height="26" viewBox="0 0 30 30" fill="none"><rect x="1" y="2" width="28" height="21" rx="7" fill="#fff"/><path d="M9 23l-3 5 8-4z" fill="#fff"/><g fill="#FFB800"><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2.4"/><circle cx="21" cy="12" r="2"/></g></svg> ReviewCatcher</div><p style="max-width:34ch">Automated Google reviews for businesses across Ireland. More reviews, higher ranking.</p></div>
+    <div><h4>Legal</h4><a href="#">Privacy Policy</a><a href="#">Compliance Statement</a><a href="#">AI &amp; Automation Statement</a><a href="#">Complaints Procedure</a><a href="#">Data Processing (clients)</a></div>
+    <div><h4>Contact</h4><a href="#">hello@reviewcatcher.ie</a><a href="#start">Request a call</a><a href="#">Ireland</a></div>
+  </div>
+  <div class="foot-bottom"><span>© 2026 ReviewCatcher · Registered in Ireland · RBN [xxxxxx]</span><span>Data handled under GDPR · Supervisory authority: dataprotection.ie</span></div>
+</div></footer>
+
+<script>
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var el=document.getElementById('cnt'); if(!el) return;
+  var target=18,start=12,t0=null,dur=1400; el.textContent=start;
+  function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1);el.textContent=Math.round(start+(target-start)*p);if(p<1)requestAnimationFrame(step);}
+  setTimeout(function(){requestAnimationFrame(step);},1800);
+})();
+function submitLead(){document.getElementById('formview').style.display='none';document.getElementById('thanks').style.display='block';}
+</script>
+</body>
+</html>

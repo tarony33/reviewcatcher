@@ -6,21 +6,23 @@
 
 <div
   id="cookie-consent"
-  class="fixed inset-x-0 bottom-0 z-50 hidden flex-col gap-3 border-t border-brand-light bg-white p-4 shadow-lg sm:flex-row sm:items-center sm:justify-between"
+  class="fixed inset-x-0 bottom-0 z-50 hidden flex-col gap-3 border-t bg-white p-4 shadow-lg sm:flex-row sm:items-center sm:justify-between"
+  style="font-family:var(--body); border-color:var(--line);"
 >
-  <p class="text-sm text-gray-700">
+  <p class="text-sm" style="color:var(--muted)">
     We use a few non-essential cookies for booking and payment embeds. See our
-    <a href="/privacy" class="underline text-brand">privacy policy</a>.
+    <a href="/privacy" class="underline" style="color:var(--brand)">privacy policy</a>.
   </p>
   <div class="flex gap-2">
     <button
       id="cookie-decline"
-      class="rounded border border-gray-300 px-4 py-2 text-sm"
+      class="rounded-full border px-4 py-2 text-sm"
+      style="border-color:var(--line)"
       type="button">Decline</button
     >
     <button
       id="cookie-accept"
-      class="rounded bg-brand px-4 py-2 text-sm text-white"
+      class="btn btn-primary text-sm"
       type="button">Accept</button
     >
   </div>

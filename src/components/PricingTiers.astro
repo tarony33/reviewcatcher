@@ -1,0 +1,58 @@
+---
+import { siteConfig } from "../config/site.config";
+
+const tickSvg =
+  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>';
+---
+
+<section class="offer" id="offer">
+  <div class="wrap">
+    <div class="sec-head center">
+      <span class="eyebrow">Simple pricing</span>
+      <h2>Pick the level that fits. Move up any time.</h2>
+    </div>
+    <div class="tiers">
+      {siteConfig.pricing.tiers.map((tier) => (
+        <div class={`tier ${tier.featured ? "feat" : ""}`}>
+          {tier.badge && <div class="badge">{tier.badge}</div>}
+          <div class="tname">{tier.name}</div>
+          <div class="ttag">{tier.tagline}</div>
+          {tier.enquireOnly ? (
+            <div class="tprice enq">Enquire</div>
+          ) : (
+            <div class="tprice">
+              &euro;{tier.monthlyEUR}
+              <small>/mo</small>
+            </div>
+          )}
+          <div class="tsetup">{tier.setupNote}</div>
+          <ul>
+            {tier.featuresIntro && (
+              <li>
+                <span class="tick" set:html={tickSvg} />
+                <b>{tier.featuresIntro}</b>
+              </li>
+            )}
+            {tier.features.map((feature) => (
+              <li>
+                <span class="tick" set:html={tickSvg} />
+                {feature}
+              </li>
+            ))}
+          </ul>
+          {tier.enquireOnly ? (
+            <a class="btn btn-ghost" href="#start">Talk to us</a>
+          ) : (
+            <a
+              class={`btn ${tier.featured ? "btn-primary" : "btn-ghost"}`}
+              href={`/checkout?plan=${tier.id}`}
+            >
+              Choose {tier.name}
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+    <div class="annual">{siteConfig.pricing.annualNote}</div>
+  </div>
+</section>

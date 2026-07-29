@@ -1,0 +1,52 @@
+---
+import { siteConfig } from "../config/site.config";
+const townsLine = `Serving businesses across ${siteConfig.areaServed} — ${siteConfig.towns.join(" · ")} · ${siteConfig.townsNote}.`;
+---
+
+<section class="lead" id="start">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow" style="color:var(--star)">Get started</span>
+      <h2>See how many reviews you're leaving on the table.</h2>
+      <p class="sub">
+        Leave your details and we'll call you back with a free review audit — where you stand
+        against nearby competitors, and exactly what {siteConfig.name} would do for you. If it's
+        a fit, you can be live the same week.
+      </p>
+      <div class="towns">{townsLine}</div>
+    </div>
+    <div class="formcard" id="formcard">
+      <div id="formview">
+        <h3>Request your free review audit</h3>
+        <p class="fsub">No obligation. We'll call you back, usually same day.</p>
+        <div class="field"><label for="biz">Business name</label><input id="biz" type="text" placeholder="e.g. Rush Strength &amp; Fitness" /></div>
+        <div class="field"><label for="nm">Your name</label><input id="nm" type="text" placeholder="e.g. John Murphy" /></div>
+        <div class="field"><label for="ph">Contact number</label><input id="ph" type="tel" placeholder="08x xxx xxxx" /></div>
+        <div class="field"><label for="em">Email</label><input id="em" type="email" placeholder="you@business.ie" /></div>
+        <p class="consent">
+          By submitting, you agree to us contacting you about {siteConfig.name} and to our
+          <a href="/privacy">Privacy Policy</a>. We never share your details.
+        </p>
+        <!-- TODO: wire to n8n lead webhook (build-spec-v2 §6) + Turnstile, instead of the local-only toggle below -->
+        <button class="btn btn-primary" id="lead-submit">Request my free audit &rarr;</button>
+      </div>
+      <div class="thanks" id="thanks">
+        <div class="tk">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" /></svg>
+        </div>
+        <h3>Got it — talk soon.</h3>
+        <p class="fsub">We'll be in touch shortly with your free review audit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const submitBtn = document.getElementById("lead-submit");
+  submitBtn?.addEventListener("click", () => {
+    const formview = document.getElementById("formview");
+    const thanks = document.getElementById("thanks");
+    if (formview) formview.style.display = "none";
+    if (thanks) thanks.style.display = "block";
+  });
+</script>

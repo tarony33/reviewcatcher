@@ -1,0 +1,68 @@
+---
+import { siteConfig } from "../config/site.config";
+---
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Automated Google reviews &middot; across {siteConfig.areaServed}</span>
+      <h1>More <span class="hl">5-star reviews</span>. On autopilot.</h1>
+      <p class="sub">
+        {siteConfig.name} asks every happy customer for a review automatically, chases the ones
+        who forget, and replies to every review — so you never have to think about it.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#start">Get my free review audit &rarr;</a>
+        <a class="btn btn-ghost" href="#offer">See pricing</a>
+      </div>
+      <div class="micro"><span class="dot"></span> No lock-in &middot; Cancel anytime &middot; 30-day review guarantee</div>
+    </div>
+    <div class="stage">
+      <div class="phone">
+        <div class="screen">
+          <div class="chatline">Today &middot; sent automatically after the job</div>
+          <div class="bubble them b1">Hi Sarah — thanks for coming in today! If you've a spare 20 seconds, we'd love a quick review 🙏 [tap here]</div>
+          <div class="bubble me b2">Done! ⭐️⭐️⭐️⭐️⭐️</div>
+          <div class="bubble them b3">You're a legend — thank you! 💙</div>
+          <div class="rev-card">
+            <div class="rev-top">
+              <div class="avatar">S</div>
+              <div>
+                <div class="rev-name">Sarah M.</div>
+                <div class="stars">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg viewBox="0 0 24 24" fill="#FFB800"><path d="M12 2l3 6.5 7 .6-5.3 4.6L18.2 21 12 17.3 5.8 21l1.5-7.3L2 9.1l7-.6z" /></svg>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div class="rev-txt">"Brilliant service, couldn't recommend them more. Quick, friendly and spotless."</div>
+          </div>
+        </div>
+        <div class="counter"><div class="n" id="cnt">18</div><div class="l">reviews this month</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var el = document.getElementById("cnt");
+    if (!el) return;
+    var target = 18,
+      start = 12,
+      t0 = null,
+      dur = 1400;
+    el.textContent = String(start);
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min((ts - t0) / dur, 1);
+      el.textContent = String(Math.round(start + (target - start) * p));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    setTimeout(function () {
+      requestAnimationFrame(step);
+    }, 1800);
+  })();
+</script>

@@ -1,0 +1,18 @@
+---
+import { siteConfig } from "../config/site.config";
+---
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Questions</span>
+      <h2>Everything you need to know.</h2>
+    </div>
+    {siteConfig.faq.map((item, i) => (
+      <details open={i === 0}>
+        <summary>{item.q}<span class="plus">+</span></summary>
+        <p>{item.a}</p>
+      </details>
+    ))}
+  </div>
+</section>

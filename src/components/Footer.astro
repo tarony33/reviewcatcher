@@ -2,25 +2,50 @@
 import { siteConfig } from "../config/site.config";
 
 const legalLinks = [
-  { href: "/privacy", label: "Privacy" },
-  { href: "/compliance", label: "Compliance" },
-  { href: "/ai-statement", label: "AI Statement" },
-  { href: "/complaints", label: "Complaints" },
-  { href: "/contact", label: "Contact" },
-  { href: "/dpa", label: "DPA" },
+  { href: "/privacy", label: "Privacy Policy" },
+  { href: "/compliance", label: "Compliance Statement" },
+  { href: "/ai-statement", label: "AI &amp; Automation Statement" },
+  { href: "/complaints", label: "Complaints Procedure" },
+  { href: "/dpa", label: "Data Processing (clients)" },
 ];
+
+const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-brand-light bg-white py-8 text-sm text-gray-600">
-  <div class="mx-auto flex max-w-5xl flex-col gap-4 px-4 sm:flex-row sm:items-center sm:justify-between">
-    <p>&copy; {new Date().getFullYear()} {siteConfig.name}. {siteConfig.contact.email}</p>
-    <nav class="flex flex-wrap gap-x-4 gap-y-1">
-      {legalLinks.map((link) => (
-        <a href={link.href} class="hover:text-brand">{link.label}</a>
-      ))}
-    </nav>
+<footer>
+  <div class="wrap">
+    <div class="fgrid2">
+      <div>
+        <div class="logo">
+          <svg width="26" height="26" viewBox="0 0 30 30" fill="none">
+            <rect x="1" y="2" width="28" height="21" rx="7" fill="#fff" />
+            <path d="M9 23l-3 5 8-4z" fill="#fff" />
+            <g fill="#FFB800">
+              <circle cx="9" cy="12" r="2" />
+              <circle cx="15" cy="12" r="2.4" />
+              <circle cx="21" cy="12" r="2" />
+            </g>
+          </svg>
+          {siteConfig.name}
+        </div>
+        <p style="max-width:34ch">
+          Automated Google reviews for businesses across {siteConfig.areaServed}. {siteConfig.tagline}
+        </p>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        {legalLinks.map((link) => <a href={link.href} set:html={link.label} />)}
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+        <a href="/#start">Request a call</a>
+        <a href="/">{siteConfig.areaServed}</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; {year} {siteConfig.name} &middot; {siteConfig.legal.registrationNote}</span>
+      <span>Data handled under GDPR &middot; Supervisory authority: dataprotection.ie</span>
+    </div>
   </div>
-  <p class="mx-auto mt-4 max-w-5xl px-4 text-xs text-gray-400">
-    We process personal data under GDPR. See our privacy policy and DPA for details.
-  </p>
 </footer>

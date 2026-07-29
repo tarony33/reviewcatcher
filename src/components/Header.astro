@@ -1,0 +1,26 @@
+---
+import { siteConfig } from "../config/site.config";
+---
+
+<header class="hdr">
+  <div class="wrap">
+    <a class="logo" href="/">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+        <rect x="1" y="2" width="28" height="21" rx="7" fill="#185FA5" />
+        <path d="M9 23l-3 5 8-4z" fill="#185FA5" />
+        <g fill="#FFB800">
+          <circle cx="9" cy="12" r="2" />
+          <circle cx="15" cy="12" r="2.4" />
+          <circle cx="21" cy="12" r="2" />
+        </g>
+      </svg>
+      {siteConfig.name}
+    </a>
+    <nav class="nav">
+      <a href="#how">How it works</a>
+      <a href="#offer">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-primary" href="#start">Get started</a>
+    </nav>
+  </div>
+</header>

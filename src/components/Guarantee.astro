@@ -1,0 +1,22 @@
+---
+import { siteConfig } from "../config/site.config";
+const { guarantee } = siteConfig;
+---
+
+<section>
+  <div class="wrap">
+    <div class="guar">
+      <div class="seal">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V5z" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+      </div>
+      <div>
+        <h3>{guarantee.headline}</h3>
+        <p>{guarantee.body}</p>
+        <div class="cond">{guarantee.condition}</div>
+      </div>
+    </div>
+  </div>
+</section>

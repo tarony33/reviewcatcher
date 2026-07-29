@@ -1,11 +1,25 @@
 /*
   Brand tokens — the single fork point for restyling a new vertical.
-  Change these values only; components should never hard-code colors.
+  Change these values only; components should never hard-code colors or fonts.
+  Source of truth: spec/reviewcatcher-mockup.html (v2).
 */
 :root {
-  --brand: #185fa5;
-  --brand-light: #e6f1fb;
-  --brand-accent: #378add;
-  --star: #ffd21a;
-  --star-deep: #efb100;
+  --brand: #185FA5;
+  --brand-deep: #0E3B66;
+  --brand-light: #E6F1FB;
+  --accent: #378ADD;
+  --star: #FFB800;
+  --ink: #0C1B2A;
+  --muted: #586A7A;
+  --paper: #FFFFFF;
+  --paper-2: #F4F9FD;
+  --line: #E1EBF4;
+  --pos: #1B9C6B;
+
+  --display: 'Bricolage Grotesque', sans-serif;
+  --body: 'Figtree', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+
+  --wrap: 1160px;
+  --r: 16px;
 }

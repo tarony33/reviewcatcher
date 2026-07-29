@@ -1,8 +1,17 @@
 # ReviewCatcher site
 
-Astro + Tailwind, deployed to Cloudflare Pages. Built as a replicable
-service-business site pipeline — see `reviewcatcher-build-spec.md` for the
-full brief. This repo is instance #1; forking it stands up the next vertical.
+Astro, deployed to Cloudflare Pages. Built as a replicable service-business
+site pipeline — see `spec/reviewcatcher-build-spec-v2.md` for the full brief,
+`spec/reviewcatcher-mockup.html` / `spec/reviewcatcher-checkout.html` for the
+approved design (source of truth for layout/copy), and
+`spec/reviewcatcher-offer-sheet.md` for the locked pricing tiers. This repo is
+instance #1; forking it stands up the next vertical.
+
+The homepage (`src/pages/index.astro` + `src/components/*`) is built to match
+the v2 mockup: brand tokens and fonts (Bricolage Grotesque / Figtree /
+JetBrains Mono) live in `src/styles/tokens.css`, the ported mockup CSS is in
+`src/styles/global.css`, and all business specifics (pricing tiers, towns,
+guarantee copy, FAQ) live in `src/config/site.config.ts`.
 
 ## Local dev
 
@@ -13,21 +22,28 @@ npm install
 npm run dev
 ```
 
-## What's still a TODO in this scaffold
+## What's still a TODO
 
-The companion content files referenced in the build spec weren't available
-when this was scaffolded, so pages ship as structural skeletons with `TODO`
-markers instead of final copy:
-
-- `src/pages/index.astro` — paste content from `reviewcatcher-website-copy.md`,
-  including the two JSON-LD blocks (LocalBusiness/ProfessionalService + FAQPage).
+- `/checkout` page — port `spec/reviewcatcher-checkout.html` into Astro,
+  reading `?plan=basic|mid|premium` (`?plan=enterprise` redirects to the lead
+  form), monthly/annual toggle, real Stripe Elements mount, two compliance
+  checkboxes gating the pay button.
+- Location pages (`/reviews-cork`, `/reviews-galway`, …) — templated, holding
+  for real per-town content before indexing (see build-spec-v2 §3 discussion —
+  thin templated pages risk a doorway-page penalty; only build pages you're
+  going to write genuine local content for).
 - `src/pages/privacy.astro`, `compliance.astro`, `ai-statement.astro`,
-  `complaints.astro`, `contact.astro` — paste from `reviewcatcher-legal-pages.md`.
-- `src/pages/dpa.astro` — render/link `reviewcatcher-dpa-template.md`.
-- `src/config/site.config.ts` — fill in service towns, phone, Cal.com link.
-- Stripe Checkout wiring (products, payment methods, success redirect) — build-spec §6.
-- Cal.com embed + lead-capture form → n8n webhook, Turnstile-protected — build-spec §7.
-- Stripe → n8n webhook for the onboarding sequence — build-spec §7.
+  `complaints.astro`, `contact.astro`, `dpa.astro` — still structural
+  skeletons. The companion files (`reviewcatcher-legal-pages.md`,
+  `reviewcatcher-dpa-template.md`) haven't been supplied yet.
+- `src/config/site.config.ts` — fill in real contact phone, Cal.com link (if
+  kept), company registration number.
+- Stripe products/prices + webhook wiring (build-spec-v2 §4, §6).
+- Lead form + n8n webhook + Turnstile (build-spec-v2 §6) — currently a
+  client-side-only toggle, not wired to anything.
+- The n8n delivery engine itself (build-spec-v2 §7) — SMS requests, follow-ups,
+  reactivation campaigns, AI review replies via Google Business Profile
+  Manager access. This lives outside the Astro repo entirely.
 
 ## Deploying to Cloudflare Pages
 

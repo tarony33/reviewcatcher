@@ -26,13 +26,20 @@ const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+
     {jsonLd.map((block) => (
       <script type="application/ld+json" set:html={JSON.stringify(block)} />
     ))}
 
     <CloudflareAnalytics />
   </head>
-  <body class="flex min-h-screen flex-col text-gray-900">
+  <body>
     <slot />
     <Footer />
     <CookieConsent />

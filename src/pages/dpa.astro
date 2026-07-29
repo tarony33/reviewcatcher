@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { siteConfig } from "../config/site.config";
+// TODO: render or link reviewcatcher-dpa-template.md content here.
+// Also attach the same DPA in the onboarding email (build-spec §7).
+---
+
+<Layout title="Data Processing Agreement | ReviewCatcher" description="ReviewCatcher's DPA for clients.">
+  <main class="mx-auto max-w-3xl flex-1 px-4 py-16">
+    <h1 class="text-3xl font-bold">Data Processing Agreement</h1>
+    <p class="mt-2 text-sm text-gray-500">
+      Last updated: {siteConfig.legal.dpaLastUpdated || "TODO"}
+    </p>
+    <div class="prose mt-6">
+      <!-- TODO -->
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { siteConfig } from "../config/site.config";
+// TODO: paste content from reviewcatcher-legal-pages.md ("Contact" section);
+// wire the lead-capture form to the n8n webhook per build-spec §7, with Turnstile.
+---
+
+<Layout title="Contact | ReviewCatcher" description="Get in touch with ReviewCatcher.">
+  <main class="mx-auto max-w-3xl flex-1 px-4 py-16">
+    <h1 class="text-3xl font-bold">Contact</h1>
+    <p class="mt-4">{siteConfig.contact.email}</p>
+    <!-- TODO: lead form (name, business, email, phone) -> n8n webhook, Turnstile-protected -->
+  </main>
+</Layout>

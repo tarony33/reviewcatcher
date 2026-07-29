@@ -1,0 +1,11 @@
+/*
+  Brand tokens — the single fork point for restyling a new vertical.
+  Change these values only; components should never hard-code colors.
+*/
+:root {
+  --brand: #185fa5;
+  --brand-light: #e6f1fb;
+  --brand-accent: #378add;
+  --star: #ffd21a;
+  --star-deep: #efb100;
+}

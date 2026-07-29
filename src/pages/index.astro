@@ -1,0 +1,77 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { siteConfig } from "../config/site.config";
+
+// TODO: replace placeholder copy below with content from
+// reviewcatcher-website-copy.md, including the two JSON-LD blocks
+// (LocalBusiness/ProfessionalService + FAQPage) — paste them into jsonLd below.
+const jsonLd: Record<string, unknown>[] = [
+  // { "@context": "https://schema.org", "@type": "ProfessionalService", ... },
+  // { "@context": "https://schema.org", "@type": "FAQPage", ... },
+];
+---
+
+<Layout
+  title="ReviewCatcher | Get More Google Reviews for North Dublin Businesses"
+  description="ReviewCatcher helps North Dublin businesses collect more Google reviews and rank higher, automatically."
+  jsonLd={jsonLd}
+>
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="bg-brand-light px-4 py-20 text-center">
+      <h1 class="mx-auto max-w-3xl text-4xl font-bold text-brand sm:text-5xl">
+        {siteConfig.tagline}
+      </h1>
+      <p class="mx-auto mt-4 max-w-xl text-lg text-gray-700">
+        <!-- TODO: hero subcopy from website-copy.md -->
+      </p>
+      <a
+        href="#book-a-call"
+        class="mt-8 inline-block rounded bg-brand px-6 py-3 font-semibold text-white"
+      >
+        Book a call
+      </a>
+    </section>
+
+    <!-- Problem -->
+    <section class="mx-auto max-w-3xl px-4 py-16">
+      <h2 class="text-2xl font-semibold">The problem</h2>
+      <!-- TODO -->
+    </section>
+
+    <!-- How it works -->
+    <section class="mx-auto max-w-3xl px-4 py-16">
+      <h2 class="text-2xl font-semibold">How it works</h2>
+      <!-- TODO -->
+    </section>
+
+    <!-- Offer -->
+    <section id="offer" class="mx-auto max-w-3xl px-4 py-16">
+      <h2 class="text-2xl font-semibold">Pricing</h2>
+      <ul class="mt-4 space-y-2">
+        <li>{siteConfig.pricing.setupOneOff.label}: €{siteConfig.pricing.setupOneOff.amountEUR}</li>
+        <li>{siteConfig.pricing.monthly.label}: €{siteConfig.pricing.monthly.amountEUR}/mo</li>
+        <li>{siteConfig.pricing.annual.label}: €{siteConfig.pricing.annual.amountEUR}/yr</li>
+      </ul>
+      <!-- TODO: Stripe Checkout buttons wired to products, per build-spec §6 -->
+    </section>
+
+    <!-- Guarantee -->
+    <section class="mx-auto max-w-3xl px-4 py-16">
+      <h2 class="text-2xl font-semibold">Guarantee</h2>
+      <!-- TODO -->
+    </section>
+
+    <!-- FAQ -->
+    <section class="mx-auto max-w-3xl px-4 py-16">
+      <h2 class="text-2xl font-semibold">FAQ</h2>
+      <!-- TODO: render as real on-page content, matches FAQPage JSON-LD above -->
+    </section>
+
+    <!-- Book a call -->
+    <section id="book-a-call" class="mx-auto max-w-3xl px-4 py-16 text-center">
+      <h2 class="text-2xl font-semibold">Book a call</h2>
+      <!-- TODO: Cal.com embed, per build-spec §7 -->
+    </section>
+  </main>
+</Layout>

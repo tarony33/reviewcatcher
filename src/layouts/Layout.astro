@@ -1,0 +1,40 @@
+---
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+import CookieConsent from "../components/CookieConsent.astro";
+import CloudflareAnalytics from "../components/CloudflareAnalytics.astro";
+import { siteConfig } from "../config/site.config";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Raw JSON-LD objects (LocalBusiness/ProfessionalService, FAQPage, etc.) to inject into <head>. */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const { title, description, jsonLd = [] } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    {jsonLd.map((block) => (
+      <script type="application/ld+json" set:html={JSON.stringify(block)} />
+    ))}
+
+    <CloudflareAnalytics />
+  </head>
+  <body class="flex min-h-screen flex-col text-gray-900">
+    <slot />
+    <Footer />
+    <CookieConsent />
+  </body>
+</html>

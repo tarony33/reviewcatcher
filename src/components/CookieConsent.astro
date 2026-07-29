@@ -1,0 +1,60 @@
+---
+// Gates non-essential, cookie-setting embeds (Stripe, Cal.com). Cloudflare Web
+// Analytics is cookieless and is NOT gated by this — it loads unconditionally
+// via <CloudflareAnalytics />.
+---
+
+<div
+  id="cookie-consent"
+  class="fixed inset-x-0 bottom-0 z-50 hidden flex-col gap-3 border-t border-brand-light bg-white p-4 shadow-lg sm:flex-row sm:items-center sm:justify-between"
+>
+  <p class="text-sm text-gray-700">
+    We use a few non-essential cookies for booking and payment embeds. See our
+    <a href="/privacy" class="underline text-brand">privacy policy</a>.
+  </p>
+  <div class="flex gap-2">
+    <button
+      id="cookie-decline"
+      class="rounded border border-gray-300 px-4 py-2 text-sm"
+      type="button">Decline</button
+    >
+    <button
+      id="cookie-accept"
+      class="rounded bg-brand px-4 py-2 text-sm text-white"
+      type="button">Accept</button
+    >
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var KEY = "rc-cookie-consent";
+    var banner = document.getElementById("cookie-consent");
+    var stored = localStorage.getItem(KEY);
+
+    function fireConsentEvent(value) {
+      document.dispatchEvent(
+        new CustomEvent("rc:consent", { detail: { consent: value } })
+      );
+    }
+
+    if (!stored) {
+      banner.classList.remove("hidden");
+      banner.classList.add("flex");
+    } else {
+      fireConsentEvent(stored);
+    }
+
+    document.getElementById("cookie-accept").addEventListener("click", function () {
+      localStorage.setItem(KEY, "accepted");
+      banner.classList.add("hidden");
+      fireConsentEvent("accepted");
+    });
+
+    document.getElementById("cookie-decline").addEventListener("click", function () {
+      localStorage.setItem(KEY, "declined");
+      banner.classList.add("hidden");
+      fireConsentEvent("declined");
+    });
+  })();
+</script>

@@ -1,13 +1,96 @@
 ---
 import Layout from "../layouts/Layout.astro";
-// TODO: paste content from reviewcatcher-legal-pages.md ("Privacy" section)
+import { siteConfig } from "../config/site.config";
+// Source: spec/reviewcatcher-legal-pages.md ("Privacy Policy" section).
+// Strong draft — for solicitor review before final use; not legal advice.
 ---
 
-<Layout title="Privacy Policy | ReviewCatcher" description="ReviewCatcher privacy policy.">
+<Layout title={`Privacy Policy | ${siteConfig.name}`} description={`${siteConfig.name} privacy policy.`}>
   <main class="page-shell">
     <h1>Privacy Policy</h1>
+    <p class="meta">Last updated: {siteConfig.legal.pagesLastUpdated}</p>
+
     <div class="prose">
-      <!-- TODO -->
+      <p>
+        This policy explains how {siteConfig.name} ("we", "us") handles personal data. It covers
+        two different situations, because our role changes depending on whose data it is.
+      </p>
+
+      <h2>1. Who we are</h2>
+      <p>
+        {siteConfig.name} is a business registered in Ireland ({siteConfig.legal.registrationStatus}),
+        based in {siteConfig.contact.address}. For questions about this policy or your data,
+        contact us at <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+        {siteConfig.contact.phone && <> or {siteConfig.contact.phone}</>}.
+      </p>
+
+      <h2>2. Two roles — please read this part</h2>
+      <ul>
+        <li>
+          <strong>When you contact us or use this website</strong> (you're a business owner, a
+          lead, or a site visitor), we are the <strong>data controller</strong> — we decide how
+          your data is used, and this policy applies to you directly.
+        </li>
+        <li>
+          <strong>When we send review requests to a client's customers</strong>, we are only the{" "}
+          <strong>data processor</strong> — the business that hired us is the controller of that
+          data. If you received a review request or reminder text and want your details removed,
+          reply STOP to the message or contact the business that serves you; you can also contact
+          us and we'll act on their instructions. See our <a href="/dpa">Data Processing Agreement</a>{" "}
+          for how we protect that data.
+        </li>
+      </ul>
+
+      <h2>3. What we collect (as controller)</h2>
+      <ul>
+        <li><strong>Enquiry / contact data:</strong> name, business name, email, phone number and anything you tell us when you contact us or book a call.</li>
+        <li><strong>Client data:</strong> the information needed to provide and bill for the service.</li>
+        <li><strong>Website data:</strong> basic analytics (pages visited, approximate location, device/browser) and any cookies you accept — see the cookie note below.</li>
+      </ul>
+
+      <h2>4. Why we use it, and our legal basis</h2>
+      <ul>
+        <li>To respond to your enquiry and provide the service — <em>performance of a contract</em> / <em>steps prior to a contract</em>.</li>
+        <li>To send you service-related messages and, where permitted, occasional updates about {siteConfig.name} — <em>legitimate interests</em> or <em>consent</em>, with an opt-out in every message.</li>
+        <li>To meet tax and legal obligations — <em>legal obligation</em>.</li>
+        <li>To understand and improve our website — <em>consent</em> (analytics cookies) or <em>legitimate interests</em>.</li>
+      </ul>
+
+      <h2>5. Cookies</h2>
+      <p>
+        We use only essential cookies by default. Any analytics or non-essential cookies load
+        only if you accept them via our cookie banner. You can withdraw consent at any time in
+        your browser settings.
+      </p>
+
+      <h2>6. Who we share data with</h2>
+      <p>
+        We use a small number of trusted service providers ("processors") to run the service —
+        for example website hosting, email, SMS delivery and scheduling/automation tools. We
+        share only what's needed, under contract, and never sell your data. A current list is
+        available on request. Some providers may process data outside the EEA; where they do, we
+        rely on appropriate safeguards (such as an adequacy decision or Standard Contractual
+        Clauses).
+      </p>
+
+      <h2>7. How long we keep it</h2>
+      <p>
+        We keep enquiry and client data only as long as needed for the purpose it was collected
+        and to meet legal/tax obligations, then delete it. Data we process on behalf of a client
+        is kept only for the life of that engagement and deleted or returned when it ends.
+      </p>
+
+      <h2>8. Your rights</h2>
+      <p>
+        You have the right to access, correct, delete, restrict or object to the processing of
+        your personal data, to data portability, and to withdraw consent at any time. To exercise
+        any of these, contact us at <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>.
+        You also have the right to complain to the Data Protection Commission
+        (<strong>dataprotection.ie</strong>).
+      </p>
+
+      <h2>9. Changes</h2>
+      <p>We may update this policy; the "last updated" date shows the latest version.</p>
     </div>
   </main>
 </Layout>

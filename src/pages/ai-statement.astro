@@ -1,13 +1,59 @@
 ---
 import Layout from "../layouts/Layout.astro";
-// TODO: paste content from reviewcatcher-legal-pages.md ("AI Statement" section)
+import { siteConfig } from "../config/site.config";
+// Source: spec/reviewcatcher-legal-pages.md ("AI & Automation Statement" section).
+// Strong draft — for solicitor review before final use; not legal advice.
 ---
 
-<Layout title="AI Statement | ReviewCatcher" description="How ReviewCatcher uses AI.">
+<Layout title={`AI Statement | ${siteConfig.name}`} description={`How ${siteConfig.name} uses AI.`}>
   <main class="page-shell">
-    <h1>AI Statement</h1>
+    <h1>AI &amp; Automation Statement</h1>
+    <p class="meta">Last updated: {siteConfig.legal.pagesLastUpdated}</p>
+
     <div class="prose">
-      <!-- TODO -->
+      <p>
+        We believe in being upfront about how we use automation and artificial intelligence, in
+        line with the transparency principles of the EU AI Act and GDPR.
+      </p>
+
+      <h2>Where we use AI and automation</h2>
+      <p>
+        {siteConfig.name} uses automation to schedule and send review-request messages, and uses
+        AI to help draft replies to reviews. This is what lets us deliver the service reliably
+        and at a price small businesses can afford.
+      </p>
+
+      <h2>Human oversight</h2>
+      <p>
+        AI assists our work; it doesn't run unsupervised. Review responses and message templates
+        are set up and overseen by a person, and clients can review or change how their responses
+        are handled at any time.
+      </p>
+
+      <h2>No significant automated decisions</h2>
+      <p>
+        We do not use AI to make solely automated decisions that produce legal or similarly
+        significant effects about any individual (GDPR Article 22). AI here drafts and schedules
+        ordinary customer communications — nothing more.
+      </p>
+
+      <h2>Your data and AI</h2>
+      <p>
+        We do not permit personal data handled through our service to be used to train
+        third-party AI models. AI tools are used only to generate the specific output needed to
+        deliver the service.
+      </p>
+
+      <h2>Talk to a human</h2>
+      <p>
+        Anyone who receives a message from us can reply to reach a person, and any client can ask
+        for a human to handle any part of their account.
+      </p>
+
+      <p>
+        Questions about our use of AI? Contact{" "}
+        <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>.
+      </p>
     </div>
   </main>
 </Layout>

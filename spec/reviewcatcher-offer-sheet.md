@@ -38,11 +38,11 @@ The definitive tier definitions, guarantee, and what has to be *built and tested
 
 ## Guarantee (customer-facing wording)
 
-> **Reviews in 30 days, or your setup is free.** If you don't get a single new Google review in your first 30 days, we refund your setup fee in full — provided you give us at least 50 contactable past customers you have permission to message.
+> **Reviews in 30 days, or your money back.** If you receive no new Google reviews in your first 30 days on the service, we refund your setup fee in full.
 
-Once it's true, add: *"— and we've never had to."*
+Results-only — no customer-count or process conditions in the wording. Once it's true, add: *"— and we've never had to."*
 
-**Internal notes:** refund is capped to the **setup fee only** (never monthly fees). The 50-contact condition ties the promise to the one input you don't otherwise control — a client with no list can't be guaranteed an outcome. Put the full terms on the site's Terms page.
+**Internal notes:** refund is capped to the **setup fee only** (never monthly fees) — this is a remedy scope, not a process condition on the client. The residual risk (a client with too small a list to produce results) is managed **upstream at the free review audit**: don't take on a business with no reviewable customer base. Keeping the guarantee clean and moving qualification to the sale avoids excluding smaller clients in the wording or inviting disputes. Full terms on the site's Terms page.
 
 ---
 

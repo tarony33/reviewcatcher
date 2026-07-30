@@ -1,13 +1,58 @@
 ---
 import Layout from "../layouts/Layout.astro";
-// TODO: paste content from reviewcatcher-legal-pages.md ("Compliance" section)
+import { siteConfig } from "../config/site.config";
+// Source: spec/reviewcatcher-legal-pages.md ("Compliance Statement" section).
+// Strong draft — for solicitor review before final use; not legal advice.
 ---
 
-<Layout title="Compliance | ReviewCatcher" description="ReviewCatcher compliance statement.">
+<Layout title={`Compliance | ${siteConfig.name}`} description={`${siteConfig.name} compliance statement.`}>
   <main class="page-shell">
-    <h1>Compliance</h1>
+    <h1>Compliance Statement</h1>
+    <p class="meta">Last updated: {siteConfig.legal.pagesLastUpdated}</p>
+
     <div class="prose">
-      <!-- TODO -->
+      <p>
+        {siteConfig.name} is built to keep both us and our clients on the right side of the
+        rules. This statement summarises the standards we work to.
+      </p>
+
+      <h2>Data protection (GDPR &amp; Irish Data Protection Acts)</h2>
+      <p>
+        We handle all personal data in line with the EU General Data Protection Regulation and
+        the Irish Data Protection Acts. When we process a client's customer data, we do so only
+        as a processor, under a signed Data Processing Agreement, strictly on the client's
+        instructions.
+      </p>
+
+      <h2>Electronic marketing (ePrivacy)</h2>
+      <p>
+        Messages we send on a client's behalf comply with Ireland's ePrivacy Regulations
+        (S.I. 336/2011). We only contact individuals for whom the client has a lawful basis —
+        typically existing customers who provided their details and were given the chance to
+        opt out — and every message includes a simple opt-out (e.g. reply STOP), which we honour
+        immediately.
+      </p>
+
+      <h2>Google review guidelines</h2>
+      <p>
+        Our method complies with Google's review policies. We ask every customer the same way,
+        with no incentives and no "gating" (we never filter out unhappy customers or ask only
+        happy ones). This keeps our clients' review profiles genuine and within Google's rules.
+      </p>
+
+      <h2>Security</h2>
+      <p>
+        Personal data is stored in access-controlled systems, encrypted in transit, and reachable
+        only by the tools needed to deliver the service. We keep processing records and review
+        our providers for appropriate safeguards.
+      </p>
+
+      <p>
+        Questions or concerns about our compliance can be raised at{" "}
+        <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>;
+        data-protection concerns can also be escalated to the Data Protection Commission
+        (dataprotection.ie).
+      </p>
     </div>
   </main>
 </Layout>

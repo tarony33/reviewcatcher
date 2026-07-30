@@ -36,11 +36,14 @@ npm run dev
   homepage's Ireland-wide positioning + towns list covers this for now.
   Revisit only once specific towns are picked worth writing real content for.
 - `src/pages/privacy.astro`, `compliance.astro`, `ai-statement.astro`,
-  `complaints.astro`, `contact.astro`, `dpa.astro`, `terms.astro` — still
-  structural skeletons. The companion files (`reviewcatcher-legal-pages.md`,
-  `reviewcatcher-dpa-template.md`) haven't been supplied yet.
-- `src/config/site.config.ts` — fill in real contact phone, Cal.com link (if
-  kept), company registration number.
+  `complaints.astro`, `contact.astro`, `terms.astro` are real content now
+  (`spec/reviewcatcher-legal-pages.md` + `spec/reviewcatcher-terms.md`) —
+  strong drafts, flagged for solicitor review before go-live, not legal
+  advice. `dpa.astro` is still a placeholder — the DPA template hasn't been
+  supplied yet.
+- `src/config/site.config.ts` — fill in real contact phone (legal pages omit
+  the phone line until it's set), Cal.com link (if kept), actual company
+  registration number (RBN — currently "registration pending").
 - Stripe products/prices + webhook wiring (build-spec-v2 §4, §6).
 - Lead form + n8n webhook + Turnstile (build-spec-v2 §6) — currently a
   client-side-only toggle, not wired to anything.

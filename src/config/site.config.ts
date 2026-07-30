@@ -10,8 +10,9 @@ export const siteConfig = {
   url: "https://reviewcatcher.ie",
 
   contact: {
-    email: "hello@reviewcatcher.ie", // TODO: confirm real inbox
-    phone: "", // TODO
+    email: "support@reviewcatcher.ie",
+    phone: "", // TODO — legal pages omit the phone line until this is set
+    address: "Rush, Co. Dublin, Ireland",
   },
 
   // Ireland-wide, no separate GBP storefront per town — see build-spec-v2 §5 /
@@ -113,17 +114,20 @@ export const siteConfig = {
     annualNote: "All plans month-to-month. Prefer to save? Pay annually and get roughly 2 months free.",
   },
 
+  // Results-only wording, deliberately no customer-count/process condition —
+  // per spec/reviewcatcher-offer-sheet.md, qualification happens upstream at
+  // the free review audit, not in the public guarantee text.
   guarantee: {
-    headline: "Reviews in 30 days, or your setup is free.",
-    body: "If you don't get a single new review in your first 30 days, we refund your setup fee in full. We only win when your rating does.",
-    condition: "Applies where you provide at least 50 contactable past customers you have permission to message.",
-    // Internal note (spec/reviewcatcher-offer-sheet.md): refund capped to the
-    // setup fee only, never monthly fees. Full terms belong on /compliance or /privacy.
+    headline: "Reviews in 30 days, or your money back.",
+    body: "If you receive no new Google reviews in your first 30 days on the service, we refund your setup fee in full.",
+    // Internal note: refund capped to the setup fee only, never monthly fees.
+    // Full terms are on /terms §5.
   },
 
   legal: {
-    dpaLastUpdated: "", // TODO
-    registrationNote: "Registered in Ireland · RBN [xxxxxx]", // TODO: confirm company number
+    dpaLastUpdated: "", // TODO — DPA template not supplied yet, /dpa stays a placeholder
+    pagesLastUpdated: "July 2026", // shared "Last updated" date across privacy/compliance/AI/complaints/terms
+    registrationStatus: "RBN — registration pending", // used inline after "registered in Ireland (…)" on legal pages
   },
 
   // Rendered as real on-page content in <FAQ /> and reused for the FAQPage

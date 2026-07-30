@@ -1,13 +1,39 @@
 ---
 import Layout from "../layouts/Layout.astro";
-// TODO: paste content from reviewcatcher-legal-pages.md ("Complaints" section)
+import { siteConfig } from "../config/site.config";
+// Source: spec/reviewcatcher-legal-pages.md ("Complaints Procedure" section).
+// Strong draft — for solicitor review before final use; not legal advice.
 ---
 
-<Layout title="Complaints | ReviewCatcher" description="How to raise a complaint with ReviewCatcher.">
+<Layout title={`Complaints | ${siteConfig.name}`} description={`How to raise a complaint with ${siteConfig.name}.`}>
   <main class="page-shell">
-    <h1>Complaints</h1>
+    <h1>Complaints Procedure</h1>
+    <p class="meta">Last updated: {siteConfig.legal.pagesLastUpdated}</p>
+
     <div class="prose">
-      <!-- TODO -->
+      <p>We want to hear if something's not right, and we aim to fix it quickly.</p>
+
+      <h2>How to raise a complaint</h2>
+      <p>
+        Contact us at <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+        {siteConfig.contact.phone && <> or {siteConfig.contact.phone}</>} with the details. Please
+        tell us what happened and what outcome you're looking for.
+      </p>
+
+      <h2>What happens next</h2>
+      <p>
+        We'll acknowledge your complaint within 2 working days and aim to give you a full
+        response within 10 working days. If we need longer, we'll tell you why and when to expect
+        an answer.
+      </p>
+
+      <h2>Data protection complaints</h2>
+      <p>
+        If your complaint is about how we've handled personal data and you're not satisfied with
+        our response, you have the right to complain to the Data Protection Commission — the
+        Irish supervisory authority — at <strong>dataprotection.ie</strong> or 21 Fitzwilliam
+        Square South, Dublin 2, D02 RD28.
+      </p>
     </div>
   </main>
 </Layout>

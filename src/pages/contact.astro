@@ -1,14 +1,28 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { siteConfig } from "../config/site.config";
-// TODO: paste content from reviewcatcher-legal-pages.md ("Contact" section);
-// wire the lead-capture form to the n8n webhook per build-spec §7, with Turnstile.
+// Source: spec/reviewcatcher-legal-pages.md ("Contact" section).
+// TODO: lead form (name, business, email, phone) -> n8n webhook, Turnstile-protected
+// (build-spec-v2 §6) — the homepage lead form at /#start covers this for now.
 ---
 
-<Layout title="Contact | ReviewCatcher" description="Get in touch with ReviewCatcher.">
+<Layout title={`Contact | ${siteConfig.name}`} description={`Get in touch with ${siteConfig.name}.`}>
   <main class="page-shell">
     <h1>Contact</h1>
-    <p class="meta">{siteConfig.contact.email}</p>
-    <!-- TODO: lead form (name, business, email, phone) -> n8n webhook, Turnstile-protected -->
+    <div class="prose">
+      <p>
+        <strong>{siteConfig.name}</strong><br />
+        Registered in Ireland &middot; {siteConfig.legal.registrationStatus}<br />
+        {siteConfig.contact.address}<br />
+        Email: <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a><br />
+        {siteConfig.contact.phone && <>Phone: {siteConfig.contact.phone}<br /></>}
+      </p>
+      <p>
+        {siteConfig.name} is a registered Irish business. All personal data is handled in line
+        with the GDPR and the Irish Data Protection Acts. Supervisory authority: the Data
+        Protection Commission (dataprotection.ie).
+      </p>
+      <p>Prefer to talk it through first? <a href="/#start">Request a free review audit</a> and we'll call you back.</p>
+    </div>
   </main>
 </Layout>

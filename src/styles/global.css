@@ -1,13 +1,32 @@
 @import "./tokens.css";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /*
-  Site-wide component styles, ported from spec/reviewcatcher-mockup.html (v2).
-  Kept as plain CSS (not Tailwind utilities) to stay pixel-faithful to the
-  approved mockup. Legal/placeholder pages still use Tailwind utility classes.
+  Site-wide styles, ported from spec/reviewcatcher-mockup.html (v2). Plain CSS
+  throughout (no Tailwind) to stay pixel-faithful to the approved mockup.
+  Simple placeholder/legal pages use the .page-shell / .prose helpers below.
 */
+
+.page-shell {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  min-height: 60vh;
+}
+.page-shell h1 {
+  font-size: clamp(1.9rem, 3vw + 1rem, 2.5rem);
+}
+.page-shell .meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+.page-shell .prose {
+  margin-top: 1.75rem;
+  color: var(--ink);
+}
+.page-shell .prose p + p {
+  margin-top: 1rem;
+}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }

@@ -4,29 +4,41 @@
 // via <CloudflareAnalytics />.
 ---
 
-<div
-  id="cookie-consent"
-  class="fixed inset-x-0 bottom-0 z-50 hidden flex-col gap-3 border-t bg-white p-4 shadow-lg sm:flex-row sm:items-center sm:justify-between"
-  style="font-family:var(--body); border-color:var(--line);"
->
-  <p class="text-sm" style="color:var(--muted)">
+<div id="cookie-consent" class="cookie-banner">
+  <p>
     We use a few non-essential cookies for booking and payment embeds. See our
-    <a href="/privacy" class="underline" style="color:var(--brand)">privacy policy</a>.
+    <a href="/privacy">privacy policy</a>.
   </p>
-  <div class="flex gap-2">
-    <button
-      id="cookie-decline"
-      class="rounded-full border px-4 py-2 text-sm"
-      style="border-color:var(--line)"
-      type="button">Decline</button
-    >
-    <button
-      id="cookie-accept"
-      class="btn btn-primary text-sm"
-      type="button">Accept</button
-    >
+  <div class="cookie-actions">
+    <button id="cookie-decline" class="btn btn-ghost" type="button">Decline</button>
+    <button id="cookie-accept" class="btn btn-primary" type="button">Accept</button>
   </div>
 </div>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 50;
+    display: none;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: #fff;
+    border-top: 1px solid var(--line);
+    padding: 1rem;
+    box-shadow: 0 -8px 24px -12px rgba(14, 59, 102, 0.25);
+    font-family: var(--body);
+  }
+  .cookie-banner.is-visible { display: flex; }
+  .cookie-banner p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+  .cookie-banner a { color: var(--brand); text-decoration: underline; }
+  .cookie-actions { display: flex; gap: 0.5rem; }
+  .cookie-actions .btn { padding: 0.55rem 1.1rem; font-size: 0.88rem; }
+  @media (min-width: 640px) {
+    .cookie-banner.is-visible { flex-direction: row; align-items: center; justify-content: space-between; }
+  }
+</style>
 
 <script is:inline>
   (function () {
@@ -41,21 +53,20 @@
     }
 
     if (!stored) {
-      banner.classList.remove("hidden");
-      banner.classList.add("flex");
+      banner.classList.add("is-visible");
     } else {
       fireConsentEvent(stored);
     }
 
     document.getElementById("cookie-accept").addEventListener("click", function () {
       localStorage.setItem(KEY, "accepted");
-      banner.classList.add("hidden");
+      banner.classList.remove("is-visible");
       fireConsentEvent("accepted");
     });
 
     document.getElementById("cookie-decline").addEventListener("click", function () {
       localStorage.setItem(KEY, "declined");
-      banner.classList.add("hidden");
+      banner.classList.remove("is-visible");
       fireConsentEvent("declined");
     });
   })();

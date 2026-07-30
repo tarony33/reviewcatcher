@@ -10,9 +10,11 @@ interface Props {
   description: string;
   /** Raw JSON-LD objects (LocalBusiness/ProfessionalService, FAQPage, etc.) to inject into <head>. */
   jsonLd?: Record<string, unknown>[];
+  /** Checkout and similar focused flows skip the full sitewide footer. */
+  hideFooter?: boolean;
 }
 
-const { title, description, jsonLd = [] } = Astro.props;
+const { title, description, jsonLd = [], hideFooter = false } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
 ---
 
@@ -41,7 +43,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
   </head>
   <body>
     <slot />
-    <Footer />
+    {!hideFooter && <Footer />}
     <CookieConsent />
   </body>
 </html>

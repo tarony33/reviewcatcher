@@ -1,0 +1,227 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { siteConfig } from "../config/site.config";
+
+// Query-param-driven summary (?plan=basic|mid|premium), so this stays a
+// static page — the pricing data itself comes from site.config, not
+// duplicated here. Enterprise has no checkout; it's enquiry-only (redirected
+// client-side below, since Astro static pages can't branch server-side on a
+// query string).
+const checkoutTiers = siteConfig.pricing.tiers
+  .filter((t) => !t.enquireOnly)
+  .reduce(
+    (acc, t) => {
+      acc[t.id] = {
+        name: t.name,
+        tag: t.tagline,
+        monthly: t.monthlyEUR,
+        annual: t.annualEUR,
+        setup: t.setupEUR,
+      };
+      return acc;
+    },
+    {} as Record<string, { name: string; tag: string; monthly: number | null; annual: number | null; setup: number | null }>
+  );
+---
+
+<Layout title={`Checkout — ${siteConfig.name}`} description="Secure checkout, powered by Stripe." hideFooter>
+  <div class="checkout-page">
+    <div class="topbar">
+      <div class="in">
+        <span class="logo">
+          <svg width="26" height="26" viewBox="0 0 30 30" fill="none">
+            <rect x="1" y="2" width="28" height="21" rx="7" fill="#185FA5" />
+            <path d="M9 23l-3 5 8-4z" fill="#185FA5" />
+            <g fill="#FFB800">
+              <circle cx="9" cy="12" r="2" />
+              <circle cx="15" cy="12" r="2.4" />
+              <circle cx="21" cy="12" r="2" />
+            </g>
+          </svg>
+          {siteConfig.name}
+        </span>
+        <span class="secure">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+          Secure checkout &middot; powered by Stripe
+        </span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <div class="card">
+          <div class="step-lbl">1 &middot; Your details</div>
+          <h2 class="sh">Where should we set things up?</h2>
+          <div style="height:14px" />
+          <div class="field"><label for="biz">Business name</label><input id="biz" type="text" placeholder="e.g. Rush Strength &amp; Fitness" /></div>
+          <div class="two">
+            <div class="field"><label for="nm">Your name</label><input id="nm" type="text" placeholder="John Murphy" /></div>
+            <div class="field"><label for="ph">Contact number</label><input id="ph" type="tel" placeholder="08x xxx xxxx" /></div>
+          </div>
+          <div class="field"><label for="em">Email</label><input id="em" type="email" placeholder="you@business.ie" /></div>
+        </div>
+
+        <div class="card">
+          <div class="step-lbl">2 &middot; Payment</div>
+          <h2 class="sh">Choose how you'd like to pay</h2>
+          <div class="pm-row">
+            <span class="pm">💳 Card</span>
+            <span class="pm">Apple Pay</span>
+            <span class="pm">G Pay</span>
+            <span class="pm">SEPA Direct Debit</span>
+            <span class="pm">iDEAL</span>
+            <span class="pm">Bancontact</span>
+          </div>
+          <!-- TODO: mount real Stripe Elements/Payment Element here (build-spec-v2 §4) -->
+          <div class="stripe-mount">
+            Stripe's secure payment fields load here.<br />
+            <span class="mono">Card data never touches {siteConfig.name} — handled entirely by Stripe (PCI-compliant).</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="step-lbl">3 &middot; Before we start</div>
+          <h2 class="sh">A couple of quick confirmations</h2>
+          <div style="height:14px" />
+          <div class="consent-block">
+            <div class="chk">
+              <input type="checkbox" id="c1" />
+              <label for="c1">I agree to {siteConfig.name}'s <a href="/terms">Terms of Service</a>, <a href="/privacy">Privacy Policy</a> and <a href="/dpa">Data Processing Agreement</a>.</label>
+            </div>
+            <div class="chk">
+              <input type="checkbox" id="c2" />
+              <label for="c2">
+                I confirm I have permission to contact the customers I'll upload (they're existing customers or have opted in).
+                <div class="pill-note">This keeps your first campaign compliant with GDPR &amp; ePrivacy rules.</div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary">
+        <div class="card">
+          <div class="plan-pick"><span class="pn" id="planName">Mid</span><a href="/#offer">Change</a></div>
+          <div class="plan-tag" id="planTag">Everything on autopilot.</div>
+          <div class="toggle">
+            <button class="on" id="tMonthly" type="button">Monthly</button>
+            <button id="tAnnual" type="button">Annual &middot; save ~2 months</button>
+          </div>
+          <div class="line"><span class="mut" id="subLbl">Mid plan (monthly)</span><span id="subAmt">&euro;279</span></div>
+          <div class="line"><span class="mut">One-off setup &amp; kickstart</span><span id="setupAmt">&euro;249</span></div>
+          <div class="line total"><span>Due today</span><span id="dueToday">&euro;528</span></div>
+          <div class="line" style="border:0;padding-top:6px"><span class="mut" id="thenLine">then &euro;279 / month &middot; cancel anytime</span><span /></div>
+          <!-- TODO: wire to Stripe Checkout session creation (build-spec-v2 §4) instead of this disabled placeholder -->
+          <button class="paybtn" id="pay" disabled>Complete purchase</button>
+          <div class="trust"><span>🔒 Secured by Stripe</span><span>No lock-in</span><span>GDPR compliant</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ tiers: checkoutTiers, defaultPlan: "mid", enterpriseRedirect: "/#start" }}>
+  const params = new URLSearchParams(location.search);
+  let key = (params.get("plan") || defaultPlan).toLowerCase();
+
+  if (key === "enterprise") {
+    location.replace(enterpriseRedirect);
+  }
+  if (!tiers[key]) key = defaultPlan;
+
+  let cycle = "monthly";
+  function money(n) {
+    return "€" + n.toLocaleString();
+  }
+  function render() {
+    const p = tiers[key];
+    document.getElementById("planName").textContent = p.name;
+    document.getElementById("planTag").textContent = p.tag;
+    const isMonthly = cycle === "monthly";
+    const recurring = isMonthly ? p.monthly : p.annual;
+    document.getElementById("subLbl").textContent = p.name + " plan (" + cycle + ")";
+    document.getElementById("subAmt").textContent = money(recurring);
+    document.getElementById("setupAmt").textContent = p.setup ? money(p.setup) : "Included";
+    document.getElementById("dueToday").textContent = money(recurring + (p.setup || 0));
+    document.getElementById("thenLine").textContent = isMonthly
+      ? "then " + money(p.monthly) + " / month · cancel anytime"
+      : "then " + money(p.annual) + " / year · cancel anytime";
+    document.getElementById("tMonthly").classList.toggle("on", isMonthly);
+    document.getElementById("tAnnual").classList.toggle("on", !isMonthly);
+  }
+  document.getElementById("tMonthly").addEventListener("click", () => {
+    cycle = "monthly";
+    render();
+  });
+  document.getElementById("tAnnual").addEventListener("click", () => {
+    cycle = "annual";
+    render();
+  });
+
+  function gate() {
+    document.getElementById("pay").disabled = !(
+      document.getElementById("c1").checked && document.getElementById("c2").checked
+    );
+  }
+  document.getElementById("c1").addEventListener("change", gate);
+  document.getElementById("c2").addEventListener("change", gate);
+
+  render();
+</script>
+
+<style>
+  .checkout-page { background: var(--paper-2); min-height: 100vh; }
+  .checkout-page a { color: var(--brand); }
+  .checkout-page h1, .checkout-page h2, .checkout-page h3 { font-family: var(--display); letter-spacing: -0.02em; }
+
+  .checkout-page .topbar { background: #fff; border-bottom: 1px solid var(--line); }
+  .checkout-page .topbar .in { max-width: 1040px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .checkout-page .logo { display: flex; align-items: center; gap: 0.55rem; font-family: var(--display); font-weight: 800; font-size: 1.15rem; color: var(--brand-deep); }
+  .checkout-page .secure { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+
+  .checkout-page .grid { max-width: 1040px; margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: start; }
+  .checkout-page .card { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 28px; }
+  .checkout-page .card + .card { margin-top: 20px; }
+  .checkout-page .step-lbl { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .checkout-page h2.sh { font-size: 1.35rem; margin-bottom: 4px; }
+
+  .checkout-page .field { margin-bottom: 14px; }
+  .checkout-page .field label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 5px; }
+  .checkout-page .field input { width: 100%; padding: 0.78rem 0.9rem; border: 1.5px solid var(--line); border-radius: 11px; font-family: var(--body); font-size: 0.97rem; }
+  .checkout-page .field input:focus { outline: none; border-color: var(--accent); }
+  .checkout-page .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .checkout-page .pm-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0 4px; }
+  .checkout-page .pm { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: 0.78rem; font-weight: 600; color: var(--muted); display: flex; align-items: center; gap: 6px; background: var(--paper-2); }
+  .checkout-page .stripe-mount { border: 1.5px dashed var(--line); border-radius: 12px; padding: 26px; text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 8px; background: var(--paper-2); }
+  .checkout-page .stripe-mount .mono { font-family: var(--mono); font-size: 0.72rem; margin-top: 6px; color: #9fb2c2; display: inline-block; }
+
+  .checkout-page .consent-block { background: var(--brand-light); border: 1px solid #cfe2f5; border-radius: 12px; padding: 18px 20px; margin-top: 6px; }
+  .checkout-page .chk { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; font-size: 0.9rem; }
+  .checkout-page .chk:last-child { margin-bottom: 0; }
+  .checkout-page .chk input { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; accent-color: var(--brand); cursor: pointer; }
+  .checkout-page .chk label { cursor: pointer; }
+  .checkout-page .chk a { text-decoration: underline; }
+  .checkout-page .pill-note { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+
+  .checkout-page .summary { position: sticky; top: 24px; }
+  .checkout-page .plan-pick { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .checkout-page .plan-pick .pn { font-family: var(--display); font-weight: 800; font-size: 1.4rem; color: var(--brand-deep); }
+  .checkout-page .plan-pick a { font-size: 0.78rem; }
+  .checkout-page .plan-tag { color: var(--muted); font-size: 0.88rem; margin-bottom: 18px; }
+  .checkout-page .line { display: flex; justify-content: space-between; padding: 11px 0; border-top: 1px solid var(--line); font-size: 0.95rem; }
+  .checkout-page .line.total { border-top: 2px solid var(--ink); font-family: var(--display); font-weight: 800; font-size: 1.15rem; margin-top: 4px; }
+  .checkout-page .line .mut { color: var(--muted); }
+  .checkout-page .paybtn { width: 100%; margin-top: 18px; background: var(--brand); color: #fff; border: 0; border-radius: 999px; padding: 1rem; font-family: var(--body); font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: opacity 0.2s; }
+  .checkout-page .paybtn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .checkout-page .trust { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 16px; font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+
+  .checkout-page .toggle { display: flex; background: var(--paper-2); border: 1px solid var(--line); border-radius: 999px; padding: 4px; margin-bottom: 18px; font-size: 0.85rem; }
+  .checkout-page .toggle button { flex: 1; border: 0; background: none; padding: 0.5rem; border-radius: 999px; cursor: pointer; font-family: var(--body); font-weight: 600; color: var(--muted); }
+  .checkout-page .toggle button.on { background: #fff; color: var(--brand); box-shadow: 0 2px 6px rgba(14, 59, 102, 0.1); }
+
+  @media (max-width: 860px) {
+    .checkout-page .grid { grid-template-columns: 1fr; }
+    .checkout-page .summary { position: static; }
+  }
+</style>

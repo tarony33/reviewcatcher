@@ -24,17 +24,18 @@ npm run dev
 
 ## What's still a TODO
 
-- `/checkout` page — port `spec/reviewcatcher-checkout.html` into Astro,
-  reading `?plan=basic|mid|premium` (`?plan=enterprise` redirects to the lead
-  form), monthly/annual toggle, real Stripe Elements mount, two compliance
-  checkboxes gating the pay button.
+- `/checkout` (`src/pages/checkout.astro`) is built and verified — reads
+  `?plan=basic|mid|premium` (`?plan=enterprise` redirects to `/#start`),
+  monthly/annual toggle, two-checkbox consent gate. Still needs: a real Stripe
+  Elements/Payment Element mount in place of the placeholder, and the pay
+  button wired to actually create a Stripe Checkout session (build-spec-v2 §4).
 - Location pages (`/reviews-cork`, `/reviews-galway`, …) — templated, holding
   for real per-town content before indexing (see build-spec-v2 §3 discussion —
   thin templated pages risk a doorway-page penalty; only build pages you're
   going to write genuine local content for).
 - `src/pages/privacy.astro`, `compliance.astro`, `ai-statement.astro`,
-  `complaints.astro`, `contact.astro`, `dpa.astro` — still structural
-  skeletons. The companion files (`reviewcatcher-legal-pages.md`,
+  `complaints.astro`, `contact.astro`, `dpa.astro`, `terms.astro` — still
+  structural skeletons. The companion files (`reviewcatcher-legal-pages.md`,
   `reviewcatcher-dpa-template.md`) haven't been supplied yet.
 - `src/config/site.config.ts` — fill in real contact phone, Cal.com link (if
   kept), company registration number.

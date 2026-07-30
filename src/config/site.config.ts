@@ -11,7 +11,7 @@ export const siteConfig = {
 
   contact: {
     email: "support@reviewcatcher.ie",
-    phone: "", // TODO — legal pages omit the phone line until this is set
+    phone: "+353 (87) 032 0993",
     address: "Rush, Co. Dublin, Ireland",
   },
 
@@ -28,10 +28,6 @@ export const siteConfig = {
     "Drogheda",
   ],
   townsNote: "and nationwide",
-
-  booking: {
-    calComLink: "", // TODO: Cal.com booking link, if kept alongside the lead form
-  },
 
   // 4-tier pricing, locked structure per spec/reviewcatcher-offer-sheet.md.
   // Prices are the agreed starting points — adjust freely, keep the shape.

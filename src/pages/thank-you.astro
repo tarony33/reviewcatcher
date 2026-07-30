@@ -1,7 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-// Post-booking / post-payment confirmation. Both the Stripe Checkout success_url
-// and the Cal.com booking confirmation redirect should land here.
+// Post-payment confirmation — the Stripe Checkout success_url lands here
+// (functions/api/create-checkout-session.js), and the homepage lead form
+// also treats this as its post-submission destination once wired to n8n.
 ---
 
 <Layout title="Thank You | ReviewCatcher" description="Thanks for booking / your payment.">

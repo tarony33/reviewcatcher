@@ -76,12 +76,13 @@ optional polish, not a blocker.
   `complaints.astro`, `contact.astro`, `terms.astro` are real content now
   (`spec/reviewcatcher-legal-pages.md` + `spec/reviewcatcher-terms.md`) —
   strong drafts, flagged for solicitor review before go-live, not legal
-  advice. `dpa.astro` is still a placeholder — the DPA template hasn't been
-  supplied yet.
-- `src/config/site.config.ts` — fill in real contact phone (legal pages omit
-  the phone line until it's set), Cal.com link (if kept), actual company
-  registration number (RBN — currently "registration pending").
-- Stripe products/prices + webhook wiring (build-spec-v2 §4, §6).
+  advice. `dpa.astro` is still a placeholder — `reviewcatcher-dpa-template.md`
+  hasn't reached this filesystem yet (checked `~/Downloads`, not there).
+- `src/config/site.config.ts` — contact phone and RBN status are set; Cal.com
+  was removed (not used — the lead form is a plain form, not an embed).
+- Stripe products/prices are wired (see above); the `checkout.session.completed
+  → n8n` onboarding webhook is Stripe/n8n dashboard configuration, not
+  something built in this repo (build-spec-v2 §6).
 - Lead form + n8n webhook + Turnstile (build-spec-v2 §6) — currently a
   client-side-only toggle, not wired to anything.
 - The n8n delivery engine itself (build-spec-v2 §7) — SMS requests, follow-ups,

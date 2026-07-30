@@ -22,13 +22,50 @@ npm install
 npm run dev
 ```
 
+## Stripe Checkout wiring
+
+`/checkout` creates a real Stripe Checkout Session on submit:
+
+- `functions/api/create-checkout-session.js` — a Cloudflare Pages Function
+  (server-side only). Reads `STRIPE_SECRET_KEY` from the environment, maps
+  `{plan, cycle}` to a Stripe price ID, creates a `mode: "subscription"`
+  Checkout Session (the setup-fee price is mixed into `line_items` so it's
+  billed once on the first invoice, per `spec/reviewcatcher-stripe-prices.md`),
+  and returns `{ url }` for the browser to redirect to.
+- `functions/_lib/stripe-prices.js` — the tier/cycle → Stripe price ID map.
+  **Currently sandbox/test-mode IDs.** At go-live: create the same 3 products
+  in the Live Stripe account and swap the IDs in this one file.
+- The pay button in `checkout.astro` is enabled only once both consent
+  checkboxes are checked (existing gate), then POSTs the form + plan/cycle to
+  the function above and redirects to the returned Stripe URL. Errors surface
+  inline above the button.
+- `?plan=enterprise` never reaches this endpoint — it's rejected server-side
+  too, as a second guard behind the client-side `/#start` redirect.
+
+**Verified:** ran `wrangler pages dev` locally with a placeholder secret key —
+confirmed the endpoint is reachable, request/price-ID formatting is correct
+(Stripe's real API returned a clean 401 "Invalid API Key" for basic/mid/
+premium, meaning the request itself was well-formed), and enterprise/invalid-
+plan/malformed-body all fail fast with a 400 without calling Stripe.
+**Not yet verified:** an actual successful session (needs a real test-mode
+`STRIPE_SECRET_KEY`, which wasn't available to test with) — run one end-to-end
+purchase in Stripe test mode before treating this as launch-ready, and confirm
+the setup fee actually lands on the first invoice as expected.
+
+To test locally with a real test key:
+```bash
+cp .dev.vars.example .dev.vars   # then fill in your sk_test_... key
+npm run preview:functions        # builds + runs wrangler pages dev
+```
+
+Still needed: a real Stripe Elements/Payment Element mount in the "Payment"
+card (currently the placeholder shown in the mockup) if you want card entry
+on-page rather than relying on Stripe's own hosted Checkout page after
+redirect — Checkout itself already collects payment details, so this is
+optional polish, not a blocker.
+
 ## What's still a TODO
 
-- `/checkout` (`src/pages/checkout.astro`) is built and verified — reads
-  `?plan=basic|mid|premium` (`?plan=enterprise` redirects to `/#start`),
-  monthly/annual toggle, two-checkbox consent gate. Still needs: a real Stripe
-  Elements/Payment Element mount in place of the placeholder, and the pay
-  button wired to actually create a Stripe Checkout session (build-spec-v2 §4).
 - Location pages (`/reviews-cork`, `/reviews-galway`, …) — **deliberately not
   built.** A templated page that only swaps the town name won't rank for local
   search (Google treats that as thin/doorway content) — it needs genuinely

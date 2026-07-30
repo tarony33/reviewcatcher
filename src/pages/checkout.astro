@@ -72,9 +72,11 @@ const checkoutTiers = siteConfig.pricing.tiers
             <span class="pm">iDEAL</span>
             <span class="pm">Bancontact</span>
           </div>
-          <!-- TODO: mount real Stripe Elements/Payment Element here (build-spec-v2 §4) -->
+          <!-- Payment happens on Stripe's own hosted Checkout page after redirect (see
+               functions/api/create-checkout-session.js) — swap this note for an embedded
+               Stripe Elements/Payment Element mount if on-page card entry is wanted instead. -->
           <div class="stripe-mount">
-            Stripe's secure payment fields load here.<br />
+            You'll complete payment on Stripe's secure hosted checkout page.<br />
             <span class="mono">Card data never touches {siteConfig.name} — handled entirely by Stripe (PCI-compliant).</span>
           </div>
         </div>
@@ -111,8 +113,8 @@ const checkoutTiers = siteConfig.pricing.tiers
           <div class="line"><span class="mut">One-off setup &amp; kickstart</span><span id="setupAmt">&euro;249</span></div>
           <div class="line total"><span>Due today</span><span id="dueToday">&euro;528</span></div>
           <div class="line" style="border:0;padding-top:6px"><span class="mut" id="thenLine">then &euro;279 / month &middot; cancel anytime</span><span /></div>
-          <!-- TODO: wire to Stripe Checkout session creation (build-spec-v2 §4) instead of this disabled placeholder -->
           <button class="paybtn" id="pay" disabled>Complete purchase</button>
+          <p id="payError" class="pay-error" role="alert" hidden></p>
           <div class="trust"><span>🔒 Secured by Stripe</span><span>No lock-in</span><span>GDPR compliant</span></div>
         </div>
       </div>
@@ -166,6 +168,45 @@ const checkoutTiers = siteConfig.pricing.tiers
   document.getElementById("c1").addEventListener("change", gate);
   document.getElementById("c2").addEventListener("change", gate);
 
+  const payBtn = document.getElementById("pay");
+  const errorEl = document.getElementById("payError");
+
+  function showError(message) {
+    errorEl.textContent = message;
+    errorEl.hidden = false;
+  }
+
+  payBtn.addEventListener("click", async () => {
+    errorEl.hidden = true;
+    payBtn.disabled = true;
+    const originalLabel = payBtn.textContent;
+    payBtn.textContent = "Redirecting to Stripe…";
+
+    try {
+      const res = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          plan: key,
+          cycle,
+          businessName: document.getElementById("biz").value,
+          name: document.getElementById("nm").value,
+          phone: document.getElementById("ph").value,
+          email: document.getElementById("em").value,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || "Something went wrong creating your checkout session.");
+      }
+      window.location.href = data.url;
+    } catch (err) {
+      showError(err.message || "Something went wrong. Please try again.");
+      payBtn.disabled = false;
+      payBtn.textContent = originalLabel;
+    }
+  });
+
   render();
 </script>
 
@@ -214,6 +255,7 @@ const checkoutTiers = siteConfig.pricing.tiers
   .checkout-page .line .mut { color: var(--muted); }
   .checkout-page .paybtn { width: 100%; margin-top: 18px; background: var(--brand); color: #fff; border: 0; border-radius: 999px; padding: 1rem; font-family: var(--body); font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: opacity 0.2s; }
   .checkout-page .paybtn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .checkout-page .pay-error { margin-top: 10px; font-size: 0.85rem; color: #C0392B; text-align: center; }
   .checkout-page .trust { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 16px; font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
 
   .checkout-page .toggle { display: flex; background: var(--paper-2); border: 1px solid var(--line); border-radius: 999px; padding: 4px; margin-bottom: 18px; font-size: 0.85rem; }

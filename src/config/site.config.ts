@@ -121,8 +121,7 @@ export const siteConfig = {
   },
 
   legal: {
-    dpaLastUpdated: "", // TODO — DPA template not supplied yet, /dpa stays a placeholder
-    pagesLastUpdated: "July 2026", // shared "Last updated" date across privacy/compliance/AI/complaints/terms
+    pagesLastUpdated: "July 2026", // shared "Last updated" date across privacy/compliance/AI/complaints/terms/dpa
     registrationStatus: "RBN — registration pending", // used inline after "registered in Ireland (…)" on legal pages
   },
 

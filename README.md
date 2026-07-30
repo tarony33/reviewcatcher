@@ -72,12 +72,18 @@ optional polish, not a blocker.
   unique content per town, which is a content decision, not a code one. The
   homepage's Ireland-wide positioning + towns list covers this for now.
   Revisit only once specific towns are picked worth writing real content for.
-- `src/pages/privacy.astro`, `compliance.astro`, `ai-statement.astro`,
-  `complaints.astro`, `contact.astro`, `terms.astro` are real content now
-  (`spec/reviewcatcher-legal-pages.md` + `spec/reviewcatcher-terms.md`) —
-  strong drafts, flagged for solicitor review before go-live, not legal
-  advice. `dpa.astro` is still a placeholder — `reviewcatcher-dpa-template.md`
-  hasn't reached this filesystem yet (checked `~/Downloads`, not there).
+- All legal pages are real content now: `privacy.astro`, `compliance.astro`,
+  `ai-statement.astro`, `complaints.astro`, `contact.astro`, `terms.astro`
+  (from `spec/reviewcatcher-legal-pages.md` + `spec/reviewcatcher-terms.md`)
+  and `dpa.astro` (from `spec/reviewcatcher-dpa-template.md`) — strong drafts,
+  flagged for solicitor review before go-live, not legal advice. `/dpa` shows
+  the standard terms every client signs; the Controller-side fields get filled
+  in on the copy sent for signature during onboarding, not on the public page.
+  **Open item:** Annex B (sub-processors) on `/dpa` has two real TODOs — the
+  SMS delivery provider and the AI provider used for review replies are both
+  still unconfirmed, and the table says so on the live page. Fill those in
+  (and confirm n8n Cloud's hosting region) before this DPA is accurate enough
+  to send for signature.
 - `src/config/site.config.ts` — contact phone and RBN status are set; Cal.com
   was removed (not used — the lead form is a plain form, not an embed).
 - Stripe products/prices are wired (see above); the `checkout.session.completed

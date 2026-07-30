@@ -1,18 +1,150 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { siteConfig } from "../config/site.config";
-// TODO: render or link reviewcatcher-dpa-template.md content here.
-// Also attach the same DPA in the onboarding email (build-spec §7).
+// Source: spec/reviewcatcher-dpa-template.md — a reusable per-client template
+// (Article 28 GDPR). This page shows the standard terms every client signs;
+// the Controller-side fields ([Client legal name], [client address], etc.)
+// get completed on the copy sent for signature during onboarding, not here.
+// Strong draft — for solicitor review before adopting as the standard signed
+// agreement. Not legal advice.
+//
+// TODO — Annex B (sub-processors) needs the real stack confirmed before this
+// is accurate: SMS delivery provider and AI provider (for review replies) are
+// both still unconfirmed. n8n (automation) and Google Workspace (email) are
+// filled in as known facts; everything else in that table is a placeholder.
 ---
 
-<Layout title="Data Processing Agreement | ReviewCatcher" description="ReviewCatcher's DPA for clients.">
+<Layout title={`Data Processing Agreement | ${siteConfig.name}`} description={`${siteConfig.name}'s Data Processing Agreement for clients.`}>
   <main class="page-shell">
     <h1>Data Processing Agreement</h1>
-    <p class="meta">
-      Last updated: {siteConfig.legal.dpaLastUpdated || "TODO"}
-    </p>
+    <p class="meta">Template version: {siteConfig.legal.pagesLastUpdated}</p>
+
     <div class="prose">
-      <!-- TODO -->
+      <p>
+        This Data Processing Agreement (DPA) sets out how {siteConfig.name} processes personal
+        data on behalf of a client, in line with Article 28 GDPR. Every client receives a
+        completed copy of this agreement — with your business's details added — to sign as part
+        of onboarding, before we begin processing any of your customers' data on your behalf. It
+        forms part of, and is governed by, your service agreement with us; where the two
+        conflict on data protection, this Agreement prevails.
+      </p>
+
+      <h2>Parties</h2>
+      <p>
+        <strong>You</strong> — the business named in your service agreement with us — act as the{" "}
+        <strong>Controller</strong> of your customers' personal data. <strong>{siteConfig.name}</strong>{" "}
+        ({siteConfig.legal.registrationStatus}, of {siteConfig.contact.address}) acts as the{" "}
+        <strong>Processor</strong>.
+      </p>
+
+      <h2>1. Definitions</h2>
+      <p>
+        "GDPR" means Regulation (EU) 2016/679. "Data Protection Law" means the GDPR and the Irish
+        Data Protection Acts 2018. "Personal Data", "Controller", "Processor", "Processing", "Data
+        Subject" and "Personal Data Breach" have the meanings given in the GDPR. "Sub-processor"
+        means any third party engaged by the Processor to process Personal Data.
+      </p>
+
+      <h2>2. Roles and scope</h2>
+      <p>
+        The Controller is the controller and the Processor is the processor of the Personal Data
+        described in <a href="#annex-a">Annex A</a>. The Processor will process Personal Data
+        only to provide the services in the Principal Agreement and only as set out in this
+        Agreement.
+      </p>
+
+      <h2>3. Processor obligations</h2>
+      <p>The Processor shall:</p>
+      <ul>
+        <li><strong>Process only on instructions</strong> — process the Personal Data only on the Controller's documented instructions (including as set out in Annex A), unless required by law, in which case it will inform the Controller first where legally permitted.</li>
+        <li><strong>Confidentiality</strong> — ensure that anyone authorised to process the Personal Data is bound by an appropriate duty of confidentiality.</li>
+        <li><strong>Security</strong> — implement the technical and organisational measures in <a href="#annex-c">Annex C</a> to ensure a level of security appropriate to the risk (Article 32 GDPR).</li>
+        <li><strong>Sub-processors</strong> — not engage a Sub-processor without the Controller's prior authorisation (see clause 4), and impose data protection terms on any Sub-processor equivalent to those in this Agreement.</li>
+        <li><strong>Assist with data subject requests</strong> — taking into account the nature of the processing, assist the Controller by appropriate measures to respond to requests from Data Subjects exercising their rights.</li>
+        <li><strong>Assist with compliance</strong> — assist the Controller in meeting its obligations on security, breach notification, data protection impact assessments and prior consultation, taking into account the information available to the Processor.</li>
+        <li><strong>Breach notification</strong> — notify the Controller without undue delay, and in any event within 48 hours, after becoming aware of a Personal Data Breach, with the information the Controller needs to meet its own notification duties.</li>
+        <li><strong>Deletion or return</strong> — at the Controller's choice, delete or return all Personal Data at the end of the services and delete existing copies, unless law requires storage.</li>
+        <li><strong>Demonstrate compliance</strong> — make available to the Controller the information necessary to demonstrate compliance with Article 28, and allow for and contribute to audits, including inspections, on reasonable notice.</li>
+      </ul>
+
+      <h2>4. Sub-processors</h2>
+      <p>
+        The Controller gives general authorisation for the Processor to use the Sub-processors
+        listed in <a href="#annex-b">Annex B</a>. The Processor will inform the Controller of any
+        intended addition or replacement of a Sub-processor, giving the Controller the
+        opportunity to object on reasonable data protection grounds. The Processor remains liable
+        for its Sub-processors' performance of these obligations.
+      </p>
+
+      <h2>5. International transfers</h2>
+      <p>
+        The Processor will not transfer Personal Data outside the EEA unless it has taken
+        measures required by Data Protection Law — such as relying on an adequacy decision or
+        putting Standard Contractual Clauses in place. Relevant transfers are noted in Annex B.
+      </p>
+
+      <h2>6. Liability and term</h2>
+      <p>
+        This Agreement takes effect on the date of signature and continues for the duration of
+        the processing under the Principal Agreement. Liability is governed by the Principal
+        Agreement.
+      </p>
+
+      <h2>7. Governing law</h2>
+      <p>
+        This Agreement is governed by the laws of Ireland, and the parties submit to the
+        jurisdiction of the Irish courts.
+      </p>
+
+      <p>
+        Both parties sign a completed copy of this agreement before your data is processed —
+        you'll receive yours during onboarding, alongside the request for your customer list and
+        confirmation of your lawful basis to contact them.
+      </p>
+
+      <h2 id="annex-a">Annex A — Details of Processing</h2>
+      <ul>
+        <li><strong>Subject matter:</strong> provision of an automated Google review-generation and review-response service.</li>
+        <li><strong>Duration:</strong> for the term of the Principal Agreement.</li>
+        <li><strong>Nature and purpose:</strong> sending review-request and reminder messages to the Controller's customers on the Controller's behalf; running an initial re-engagement campaign to the Controller's existing customers; drafting and posting responses to reviews.</li>
+        <li><strong>Types of personal data:</strong> customer name; mobile phone number; email address (if provided); details of the service/visit (e.g. date, job type); review content.</li>
+        <li><strong>Categories of data subjects:</strong> the Controller's customers and prospective customers.</li>
+        <li><strong>Controller instructions:</strong> the Processor processes the above data solely to deliver the services and for no other purpose.</li>
+      </ul>
+
+      <h2 id="annex-b">Annex B — Authorised Sub-processors</h2>
+      <p class="meta">TODO — SMS delivery provider and AI provider (review replies) still need confirming; the two rows below are placeholders, not commitments.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Sub-processor</th><th>Purpose</th><th>Location</th><th>Transfer safeguard</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>n8n (automation platform)</td><td>Workflow automation — sending requests, reminders, reactivation campaigns</td><td>TODO — confirm n8n Cloud data-hosting region</td><td>TODO</td></tr>
+            <tr><td>Google Workspace</td><td>Business email</td><td>US / EU (Google Cloud)</td><td>EU–US Data Privacy Framework / SCCs</td></tr>
+            <tr><td>TODO — SMS delivery provider</td><td>Sending SMS review requests</td><td>TODO</td><td>TODO</td></tr>
+            <tr><td>TODO — AI provider</td><td>Drafting review responses</td><td>TODO</td><td>TODO</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="annex-c">Annex C — Technical &amp; Organisational Security Measures</h2>
+      <ul>
+        <li>Access to Personal Data restricted to authorised personnel on a need-to-know basis, protected by strong authentication.</li>
+        <li>Personal Data encrypted in transit; stored in access-controlled systems.</li>
+        <li>Sub-processors selected for appropriate security and bound by contract.</li>
+        <li>Regular review of access rights; prompt removal of access when no longer needed.</li>
+        <li>Data minimisation — only the data needed to deliver the service is collected and held.</li>
+        <li>Deletion or return of Personal Data on termination.</li>
+        <li>A process for detecting, reporting and responding to Personal Data Breaches.</li>
+      </ul>
     </div>
   </main>
 </Layout>
+
+<style>
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.55rem 0.7rem; border: 1px solid var(--line); }
+  th { background: var(--paper-2); font-family: var(--display); font-weight: 700; }
+</style>

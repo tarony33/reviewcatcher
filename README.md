@@ -83,8 +83,11 @@ optional polish, not a blocker.
 - Stripe products/prices are wired (see above); the `checkout.session.completed
   → n8n` onboarding webhook is Stripe/n8n dashboard configuration, not
   something built in this repo (build-spec-v2 §6).
-- Lead form + n8n webhook + Turnstile (build-spec-v2 §6) — currently a
-  client-side-only toggle, not wired to anything.
+- Lead form (`/#start`) is wired and verified — POSTs directly to the n8n
+  production webhook (`PUBLIC_N8N_LEAD_WEBHOOK_URL`, see `.env.example`) and
+  shows the "thanks" view on a real `200`. Tested end-to-end against the live
+  workflow: got back `{"success":true,"message":"Lead received"}`. Turnstile
+  isn't on it yet — add whenever you want spam protection (build-spec-v2 §8).
 - The n8n delivery engine itself (build-spec-v2 §7) — SMS requests, follow-ups,
   reactivation campaigns, AI review replies via Google Business Profile
   Manager access. This lives outside the Astro repo entirely.
@@ -95,10 +98,11 @@ optional polish, not a blocker.
 2. In the Cloudflare dashboard: Pages → Create project → connect the GitHub repo.
    - Build command: `npm run build`
    - Build output directory: `dist`
-3. Add environment variables in the Pages project settings (never commit them):
-   `STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY`, `N8N_LEAD_WEBHOOK_URL`,
-   `N8N_STRIPE_WEBHOOK_URL`, `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`,
-   `PUBLIC_CF_BEACON_TOKEN` (from the Web Analytics tab once the site is added there).
+3. Add environment variables in the Pages project settings (never commit them
+   — see `.env.example` / `.dev.vars.example` for the full list with notes):
+   `STRIPE_SECRET_KEY`, `PUBLIC_N8N_LEAD_WEBHOOK_URL`, `PUBLIC_CF_BEACON_TOKEN`
+   (from the Web Analytics tab once the site is added there), and later
+   `TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET_KEY` once Turnstile is added.
 4. Enable **Web Analytics** for the project in the Cloudflare dashboard, copy the
    beacon token into `PUBLIC_CF_BEACON_TOKEN`.
 5. Point `reviewcatcher.ie` at Cloudflare Pages by adding the CNAME/A records

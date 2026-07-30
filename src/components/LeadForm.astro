@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from "../config/site.config";
 const townsLine = `Serving businesses across ${siteConfig.areaServed} — ${siteConfig.towns.join(" · ")} · ${siteConfig.townsNote}.`;
+const webhookUrl = import.meta.env.PUBLIC_N8N_LEAD_WEBHOOK_URL ?? "";
 ---
 
 <section class="lead" id="start">
@@ -16,20 +17,20 @@ const townsLine = `Serving businesses across ${siteConfig.areaServed} — ${site
       <div class="towns">{townsLine}</div>
     </div>
     <div class="formcard" id="formcard">
-      <div id="formview">
+      <form id="formview">
         <h3>Request your free review audit</h3>
         <p class="fsub">No obligation. We'll call you back, usually same day.</p>
-        <div class="field"><label for="biz">Business name</label><input id="biz" type="text" placeholder="e.g. Rush Strength &amp; Fitness" /></div>
-        <div class="field"><label for="nm">Your name</label><input id="nm" type="text" placeholder="e.g. John Murphy" /></div>
-        <div class="field"><label for="ph">Contact number</label><input id="ph" type="tel" placeholder="08x xxx xxxx" /></div>
-        <div class="field"><label for="em">Email</label><input id="em" type="email" placeholder="you@business.ie" /></div>
+        <div class="field"><label for="biz">Business name</label><input id="biz" name="businessName" type="text" placeholder="e.g. Rush Strength &amp; Fitness" required /></div>
+        <div class="field"><label for="nm">Your name</label><input id="nm" name="name" type="text" placeholder="e.g. John Murphy" required /></div>
+        <div class="field"><label for="ph">Contact number</label><input id="ph" name="phone" type="tel" placeholder="08x xxx xxxx" /></div>
+        <div class="field"><label for="em">Email</label><input id="em" name="email" type="email" placeholder="you@business.ie" required /></div>
         <p class="consent">
           By submitting, you agree to us contacting you about {siteConfig.name} and to our
           <a href="/privacy">Privacy Policy</a>. We never share your details.
         </p>
-        <!-- TODO: wire to n8n lead webhook (build-spec-v2 §6) + Turnstile, instead of the local-only toggle below -->
-        <button class="btn btn-primary" id="lead-submit">Request my free audit &rarr;</button>
-      </div>
+        <button class="btn btn-primary" type="submit" id="lead-submit">Request my free audit &rarr;</button>
+        <p id="leadError" class="lead-error" role="alert" hidden></p>
+      </form>
       <div class="thanks" id="thanks">
         <div class="tk">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" /></svg>
@@ -41,12 +42,52 @@ const townsLine = `Serving businesses across ${siteConfig.areaServed} — ${site
   </div>
 </section>
 
-<script>
+<style>
+  .lead-error { margin-top: 10px; font-size: 0.82rem; color: #C0392B; }
+</style>
+
+<script define:vars={{ webhookUrl }}>
+  const form = document.getElementById("formview");
   const submitBtn = document.getElementById("lead-submit");
-  submitBtn?.addEventListener("click", () => {
-    const formview = document.getElementById("formview");
-    const thanks = document.getElementById("thanks");
-    if (formview) formview.style.display = "none";
-    if (thanks) thanks.style.display = "block";
+  const errorEl = document.getElementById("leadError");
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    errorEl.hidden = true;
+
+    if (!webhookUrl) {
+      errorEl.textContent = "This form isn't connected yet — please contact us directly instead.";
+      errorEl.hidden = false;
+      return;
+    }
+
+    submitBtn.disabled = true;
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = "Sending…";
+
+    const data = new FormData(form);
+    try {
+      const res = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          businessName: data.get("businessName"),
+          name: data.get("name"),
+          phone: data.get("phone"),
+          email: data.get("email"),
+          source: "website-lead-form",
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+      if (!res.ok) throw new Error("The form couldn't be submitted. Please try again.");
+
+      document.getElementById("formcard").querySelector("#formview").style.display = "none";
+      document.getElementById("thanks").style.display = "block";
+    } catch (err) {
+      errorEl.textContent = err.message || "Something went wrong. Please try again.";
+      errorEl.hidden = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
   });
 </script>

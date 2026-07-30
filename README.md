@@ -29,10 +29,12 @@ npm run dev
   monthly/annual toggle, two-checkbox consent gate. Still needs: a real Stripe
   Elements/Payment Element mount in place of the placeholder, and the pay
   button wired to actually create a Stripe Checkout session (build-spec-v2 §4).
-- Location pages (`/reviews-cork`, `/reviews-galway`, …) — templated, holding
-  for real per-town content before indexing (see build-spec-v2 §3 discussion —
-  thin templated pages risk a doorway-page penalty; only build pages you're
-  going to write genuine local content for).
+- Location pages (`/reviews-cork`, `/reviews-galway`, …) — **deliberately not
+  built.** A templated page that only swaps the town name won't rank for local
+  search (Google treats that as thin/doorway content) — it needs genuinely
+  unique content per town, which is a content decision, not a code one. The
+  homepage's Ireland-wide positioning + towns list covers this for now.
+  Revisit only once specific towns are picked worth writing real content for.
 - `src/pages/privacy.astro`, `compliance.astro`, `ai-statement.astro`,
   `complaints.astro`, `contact.astro`, `dpa.astro`, `terms.astro` — still
   structural skeletons. The companion files (`reviewcatcher-legal-pages.md`,

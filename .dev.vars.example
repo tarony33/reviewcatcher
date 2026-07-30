@@ -1,5 +1,9 @@
 # Copy to .dev.vars for local Pages Functions testing (wrangler pages dev
-# reads this automatically). In production this lives in the Cloudflare
-# Pages project's environment variables instead — never commit the real key.
+# reads this automatically). In production these live in the Cloudflare
+# Pages project's environment variables instead — never commit the real values.
 
 STRIPE_SECRET_KEY=sk_test_...
+
+# Used by functions/api/submit-lead.js
+TURNSTILE_SECRET_KEY=
+N8N_LEAD_WEBHOOK_URL=

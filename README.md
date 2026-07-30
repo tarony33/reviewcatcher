@@ -89,11 +89,17 @@ optional polish, not a blocker.
 - Stripe products/prices are wired (see above); the `checkout.session.completed
   → n8n` onboarding webhook is Stripe/n8n dashboard configuration, not
   something built in this repo (build-spec-v2 §6).
-- Lead form (`/#start`) is wired and verified — POSTs directly to the n8n
-  production webhook (`PUBLIC_N8N_LEAD_WEBHOOK_URL`, see `.env.example`) and
-  shows the "thanks" view on a real `200`. Tested end-to-end against the live
-  workflow: got back `{"success":true,"message":"Lead received"}`. Turnstile
-  isn't on it yet — add whenever you want spam protection (build-spec-v2 §8).
+- Lead form (`/#start`) is wired, Turnstile-protected, and verified.
+  `LeadForm.astro` renders the Turnstile widget (`PUBLIC_TURNSTILE_SITE_KEY`)
+  and POSTs to `functions/api/submit-lead.js`, which verifies the token
+  server-side against Cloudflare's siteverify API before forwarding to
+  `N8N_LEAD_WEBHOOK_URL` — neither the Turnstile secret nor the n8n URL are
+  ever exposed to the browser. Tested the full pipeline with Cloudflare's
+  published dummy test keys: the "always passes" secret correctly verified
+  and forwarded to the *real* n8n workflow (got back `{"success":true}`); the
+  "always fails" secret correctly rejected before ever calling n8n. The one
+  thing that can't be tested here is a real human completing the widget with
+  your actual `TURNSTILE_SECRET_KEY` — do that once after deploying.
 - The n8n delivery engine itself (build-spec-v2 §7) — SMS requests, follow-ups,
   reactivation campaigns, AI review replies via Google Business Profile
   Manager access. This lives outside the Astro repo entirely.

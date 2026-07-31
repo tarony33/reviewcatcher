@@ -103,13 +103,13 @@ const checkoutTiers = siteConfig.pricing.tiers
 
       <div class="summary">
         <div class="card">
-          <div class="plan-pick"><span class="pn" id="planName">Mid</span><a href="/#offer">Change</a></div>
-          <div class="plan-tag" id="planTag">Everything on autopilot.</div>
+          <div class="plan-pick"><span class="pn" id="planName">Growth</span><a href="/#offer">Change</a></div>
+          <div class="plan-tag" id="planTag">Your ranking on autopilot. Single location, established businesses.</div>
           <div class="toggle">
             <button class="on" id="tMonthly" type="button">Monthly</button>
             <button id="tAnnual" type="button">Annual &middot; save ~2 months</button>
           </div>
-          <div class="line"><span class="mut" id="subLbl">Mid plan (monthly)</span><span id="subAmt">&euro;279</span></div>
+          <div class="line"><span class="mut" id="subLbl">Growth plan (monthly)</span><span id="subAmt">&euro;279</span></div>
           <div class="line"><span class="mut">One-off setup &amp; kickstart</span><span id="setupAmt">&euro;249</span></div>
           <div class="line total"><span>Due today</span><span id="dueToday">&euro;528</span></div>
           <div class="line" style="border:0;padding-top:6px"><span class="mut" id="thenLine">then &euro;279 / month &middot; cancel anytime</span><span /></div>
@@ -122,7 +122,7 @@ const checkoutTiers = siteConfig.pricing.tiers
   </div>
 </Layout>
 
-<script define:vars={{ tiers: checkoutTiers, defaultPlan: "mid", enterpriseRedirect: "/#start" }}>
+<script define:vars={{ tiers: checkoutTiers, defaultPlan: "growth", enterpriseRedirect: "/#start" }}>
   const params = new URLSearchParams(location.search);
   let key = (params.get("plan") || defaultPlan).toLowerCase();
 
@@ -131,7 +131,7 @@ const checkoutTiers = siteConfig.pricing.tiers
   }
   if (!tiers[key]) key = defaultPlan;
 
-  let cycle = "monthly";
+  let cycle = params.get("cycle") === "annual" ? "annual" : "monthly";
   function money(n) {
     return "€" + n.toLocaleString();
   }

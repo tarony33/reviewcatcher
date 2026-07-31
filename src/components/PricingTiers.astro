@@ -3,6 +3,14 @@ import { siteConfig } from "../config/site.config";
 
 const tickSvg =
   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>';
+
+// Price data for the monthly/annual toggle script — non-enquire tiers only
+// (Enterprise has no fixed price to toggle between).
+const tierPriceData = Object.fromEntries(
+  siteConfig.pricing.tiers
+    .filter((t) => !t.enquireOnly)
+    .map((t) => [t.id, { monthly: t.monthlyEUR, annual: t.annualEUR }])
+);
 ---
 
 <section class="offer" id="offer">
@@ -11,6 +19,17 @@ const tickSvg =
       <span class="eyebrow">Simple pricing</span>
       <h2>Pick the level that fits. Move up any time.</h2>
     </div>
+
+    <div class="audit-strip">
+      <p>{siteConfig.auditStrip.headline}</p>
+      <a class="btn btn-primary" href="#start">{siteConfig.auditStrip.ctaLabel}</a>
+    </div>
+
+    <div class="cycle-toggle" role="group" aria-label="Billing cycle">
+      <button class="on" id="pt-monthly" type="button">Monthly</button>
+      <button id="pt-annual" type="button">Annual &middot; save ~2 months</button>
+    </div>
+
     <div class="tiers">
       {siteConfig.pricing.tiers.map((tier) => (
         <div class={`tier ${tier.featured ? "feat" : ""}`}>
@@ -20,12 +39,16 @@ const tickSvg =
           {tier.enquireOnly ? (
             <div class="tprice enq">Enquire</div>
           ) : (
-            <div class="tprice">
-              &euro;{tier.monthlyEUR}
-              <small>/mo</small>
+            <div class="tprice" data-price-for={tier.id}>
+              &euro;<span class="amount">{tier.monthlyEUR}</span>
+              <small class="unit">/mo</small>
             </div>
           )}
           <div class="tsetup">{tier.setupNote}</div>
+          {!tier.enquireOnly && (
+            <div class="tannual-note" data-annual-note-for={tier.id} hidden>{siteConfig.pricing.annualSavingsNote}</div>
+          )}
+          <div class="tguarantee">30-day guarantee</div>
           <ul>
             {tier.featuresIntro && (
               <li>
@@ -46,6 +69,7 @@ const tickSvg =
             <a
               class={`btn ${tier.featured ? "btn-primary" : "btn-ghost"}`}
               href={`/checkout?plan=${tier.id}`}
+              data-cta-for={tier.id}
             >
               Choose {tier.name}
             </a>
@@ -53,6 +77,35 @@ const tickSvg =
         </div>
       ))}
     </div>
-    <div class="annual">{siteConfig.pricing.annualNote}</div>
   </div>
 </section>
+
+<script define:vars={{ tierPriceData }}>
+  function money(n) {
+    return "€" + n.toLocaleString();
+  }
+
+  function renderCycle(cycle) {
+    const isAnnual = cycle === "annual";
+    document.querySelectorAll("[data-price-for]").forEach((el) => {
+      const id = el.getAttribute("data-price-for");
+      const prices = tierPriceData[id];
+      if (!prices) return;
+      const amount = isAnnual ? prices.annual : prices.monthly;
+      el.querySelector(".amount").textContent = amount.toLocaleString();
+      el.querySelector(".unit").textContent = isAnnual ? "/yr" : "/mo";
+    });
+    document.querySelectorAll("[data-annual-note-for]").forEach((el) => {
+      el.hidden = !isAnnual;
+    });
+    document.querySelectorAll("[data-cta-for]").forEach((el) => {
+      const id = el.getAttribute("data-cta-for");
+      el.href = `/checkout?plan=${id}` + (isAnnual ? "&cycle=annual" : "");
+    });
+    document.getElementById("pt-monthly").classList.toggle("on", !isAnnual);
+    document.getElementById("pt-annual").classList.toggle("on", isAnnual);
+  }
+
+  document.getElementById("pt-monthly").addEventListener("click", () => renderCycle("monthly"));
+  document.getElementById("pt-annual").addEventListener("click", () => renderCycle("annual"));
+</script>

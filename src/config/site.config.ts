@@ -7,6 +7,7 @@
 export const siteConfig = {
   name: "ReviewCatcher",
   tagline: "More reviews, higher ranking.",
+  heroOutcomeLine: "More reviews → higher local ranking → more customers who find you first.",
   url: "https://reviewcatcher.ie",
 
   contact: {
@@ -34,8 +35,8 @@ export const siteConfig = {
   pricing: {
     tiers: [
       {
-        id: "basic",
-        name: "Basic",
+        id: "starter",
+        name: "Starter",
         tagline: "The essentials to start climbing. Single location, sole traders.",
         monthlyEUR: 149 as number | null,
         annualEUR: 1490 as number | null,
@@ -46,26 +47,26 @@ export const siteConfig = {
         badge: undefined as string | undefined,
         featuresIntro: undefined as string | undefined,
         features: [
-          "Automated review requests",
-          "Smart follow-up reminders",
-          "One reactivation campaign",
+          "Automated review requests after every job",
+          "Smart follow-up reminders to non-responders",
+          "One past-customer reactivation campaign",
           "Up to 50 requests / month",
         ],
       },
       {
-        id: "mid",
-        name: "Mid",
-        tagline: "Everything on autopilot. Single location, established businesses.",
+        id: "growth",
+        name: "Growth",
+        tagline: "Your ranking on autopilot. Single location, established businesses.",
         monthlyEUR: 279 as number | null,
         annualEUR: 2790 as number | null,
         setupEUR: 249 as number | null,
-        setupNote: "+ €249 setup & kickstart",
+        setupNote: "+ €249 setup & kickstart · no lock-in",
         featured: true,
         enquireOnly: false,
         badge: "Most popular" as string | undefined,
-        featuresIntro: "Everything in Basic, plus:" as string | undefined,
+        featuresIntro: "Everything in Starter, plus:" as string | undefined,
         features: [
-          "AI replies to every review",
+          "AI replies to every review, in your voice",
           "Up to 150 requests / month",
           "Priority support",
         ],
@@ -73,7 +74,7 @@ export const siteConfig = {
       {
         id: "premium",
         name: "Premium",
-        tagline: "For multi-location businesses. Everything, across all your sites.",
+        tagline: "For multi-location businesses. Every site climbing at once.",
         monthlyEUR: 499 as number | null,
         annualEUR: 4990 as number | null,
         setupEUR: 0 as number | null,
@@ -81,10 +82,10 @@ export const siteConfig = {
         featured: false,
         enquireOnly: false,
         badge: undefined as string | undefined,
-        featuresIntro: "Everything in Mid, plus:" as string | undefined,
+        featuresIntro: "Everything in Growth, plus:" as string | undefined,
         features: [
           "Up to 5 locations",
-          "Consolidated reporting",
+          "Consolidated reporting across sites",
           "Higher request volume",
         ],
       },
@@ -107,15 +108,24 @@ export const siteConfig = {
         ],
       },
     ],
-    annualNote: "All plans month-to-month. Prefer to save? Pay annually and get roughly 2 months free.",
+    // Shown per-card, only in annual mode, next to the annual price.
+    annualSavingsNote: "roughly 2 months free",
+  },
+
+  // Small strip above the pricing tiers, pointing undecided visitors at the
+  // lower-commitment lead form instead of straight to checkout.
+  auditStrip: {
+    headline:
+      "Not sure where you stand? Get a free review audit — we'll show you exactly where you rank on Google now and what's possible.",
+    ctaLabel: "Get my free audit",
   },
 
   // Results-only wording, deliberately no customer-count/process condition —
   // per spec/reviewcatcher-offer-sheet.md, qualification happens upstream at
   // the free review audit, not in the public guarantee text.
   guarantee: {
-    headline: "Reviews in 30 days, or your money back.",
-    body: "If you receive no new Google reviews in your first 30 days on the service, we refund your setup fee in full.",
+    headline: "Our promise: if you don't get new Google reviews in your first 30 days, we refund your setup fee.",
+    body: "No lock-in, cancel anytime.",
     // Internal note: refund capped to the setup fee only, never monthly fees.
     // Full terms are on /terms §5.
   },

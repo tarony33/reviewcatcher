@@ -3,15 +3,18 @@
 // three products in the Live Stripe account (same recipe) and replace the IDs
 // below — this is the one file to change.
 //
+// Keys renamed starter/growth (from basic/mid) to match the tier rename —
+// the Stripe Price IDs themselves are unchanged, same underlying prices.
+//
 // Premium has no setup price (setup is included in the plan) — `setup: null`
 // means create-checkout-session.js won't add a second line item for it.
 export const STRIPE_PRICES = {
-  basic: {
+  starter: {
     monthly: "price_1Tyw8c807IWGWhTDW3vWIcGp",
     annual: "price_1TywD9807IWGWhTDeGmTAQNp",
     setup: "price_1TywD9807IWGWhTDA3238HAB",
   },
-  mid: {
+  growth: {
     monthly: "price_1TywC0807IWGWhTD4azolbxC",
     annual: "price_1TywC0807IWGWhTDtxbBPsPV",
     setup: "price_1TywC0807IWGWhTDdR7p7qnP",

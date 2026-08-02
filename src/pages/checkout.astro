@@ -63,8 +63,9 @@ const checkoutTiers = siteConfig.pricing.tiers
 
         <div class="card">
           <div class="step-lbl">2 &middot; Payment</div>
-          <h2 class="sh">Choose how you'd like to pay</h2>
+          <h2 class="sh">Payment</h2>
           <div class="pm-row">
+            <span class="pm-label">We accept</span>
             <span class="pm">💳 Card</span>
             <span class="pm">Apple Pay</span>
             <span class="pm">G Pay</span>
@@ -76,7 +77,7 @@ const checkoutTiers = siteConfig.pricing.tiers
                functions/api/create-checkout-session.js) — swap this note for an embedded
                Stripe Elements/Payment Element mount if on-page card entry is wanted instead. -->
           <div class="stripe-mount">
-            You'll complete payment on Stripe's secure hosted checkout page.<br />
+            After "Complete purchase" you'll enter your card details on Stripe's own secure, hosted payment page — nothing is collected here.<br />
             <span class="mono">Card data never touches {siteConfig.name} — handled entirely by Stripe (PCI-compliant).</span>
           </div>
         </div>
@@ -232,7 +233,8 @@ const checkoutTiers = siteConfig.pricing.tiers
   .checkout-page .field input:focus { outline: none; border-color: var(--accent); }
   .checkout-page .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-  .checkout-page .pm-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0 4px; }
+  .checkout-page .pm-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 14px 0 4px; }
+  .checkout-page .pm-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-right: 2px; }
   .checkout-page .pm { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: 0.78rem; font-weight: 600; color: var(--muted); display: flex; align-items: center; gap: 6px; background: var(--paper-2); }
   .checkout-page .stripe-mount { border: 1.5px dashed var(--line); border-radius: 12px; padding: 26px; text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 8px; background: var(--paper-2); }
   .checkout-page .stripe-mount .mono { font-family: var(--mono); font-size: 0.72rem; margin-top: 6px; color: #9fb2c2; display: inline-block; }

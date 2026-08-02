@@ -12,12 +12,12 @@ export const STRIPE_PRICES = {
   starter: {
     monthly: "price_1Tyw8c807IWGWhTDW3vWIcGp",
     annual: "price_1TywD9807IWGWhTDeGmTAQNp",
-    setup: "price_1TywD9807IWGWhTDA3238HAB",
+    setup: "price_1Tzzsf807IWGWhTD77O1w19m", // standalone Setup & Kickstart product
   },
   growth: {
     monthly: "price_1TywC0807IWGWhTD4azolbxC",
     annual: "price_1TywC0807IWGWhTDtxbBPsPV",
-    setup: "price_1TywC0807IWGWhTDdR7p7qnP",
+    setup: "price_1TzzoQ807IWGWhTDnr2xTIv8", // standalone Setup & Kickstart product
   },
   premium: {
     monthly: "price_1TywGT807IWGWhTD2ay1Sw1F",

@@ -56,6 +56,9 @@ export async function onRequestPost({ request, env }) {
   }
   params.set("success_url", `${origin}/thank-you?session_id={CHECKOUT_SESSION_ID}`);
   params.set("cancel_url", `${origin}/checkout?plan=${encodeURIComponent(plan)}`);
+  // Captured on Stripe's hosted page; lands on the invoice and in the
+  // checkout.session.completed webhook payload (customer_details.address).
+  params.set("billing_address_collection", "required");
   if (email) params.set("customer_email", email);
   // Metadata for the checkout.session.completed -> n8n onboarding webhook (build-spec-v2 §6).
   params.set("metadata[plan]", plan);

@@ -1,0 +1,264 @@
+---
+// Lead-capture popup offering the free review audit. Opt-in per page —
+// include <AuditPopup /> only on homepage/content pages, never on /checkout
+// or the legal pages (see spec/reviewcatcher_free_audit_popup_mockup.html).
+import { siteConfig } from "../config/site.config";
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+---
+
+<div id="audit-popup-overlay" class="popup-overlay" hidden>
+  <div
+    id="audit-popup"
+    class="popup-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="audit-popup-heading"
+  >
+    <button class="popup-close" id="popup-close" type="button" aria-label="Close">&times;</button>
+
+    <div class="popup-brand">
+      <span class="popup-mark">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+          <rect x="1" y="2" width="28" height="21" rx="7" fill="#185FA5" />
+          <path d="M9 23l-3 5 8-4z" fill="#185FA5" />
+          <g fill="#FFB800">
+            <circle cx="9" cy="12" r="2" />
+            <circle cx="15" cy="12" r="2.4" />
+            <circle cx="21" cy="12" r="2" />
+          </g>
+        </svg>
+      </span>
+      <span class="popup-brand-name">{siteConfig.name}</span>
+    </div>
+
+    <div id="popup-formview">
+      <h2 id="audit-popup-heading" class="popup-heading">Grab your free review audit.</h2>
+      <p class="popup-sub">
+        A quick review audit shows how you stack up against nearby competitors and how many
+        reviews you're leaving on the table.
+      </p>
+
+      <form id="popup-form">
+        <div class="field"><label for="pop-biz">Business name</label><input id="pop-biz" name="businessName" type="text" placeholder="e.g. Rush Strength &amp; Fitness" required /></div>
+        <div class="field"><label for="pop-nm">Your name</label><input id="pop-nm" name="name" type="text" placeholder="e.g. John Murphy" required /></div>
+        <div class="field"><label for="pop-ph">Contact number</label><input id="pop-ph" name="phone" type="tel" placeholder="087 123 4567" /></div>
+        <div class="field"><label for="pop-em">Email</label><input id="pop-em" name="email" type="email" placeholder="you@business.ie" required /></div>
+
+        <p class="popup-consent">
+          By submitting you agree to our <a href="/privacy">Privacy Policy</a>. We never share your details.
+        </p>
+
+        {turnstileSiteKey && (
+          <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light"></div>
+        )}
+
+        <button class="btn btn-primary popup-submit" type="submit" id="popup-submit">Get my free audit</button>
+        <p class="popup-micro">No commitment &middot; usually a same-day callback</p>
+        <p id="popup-error" class="popup-error-text" role="alert" hidden></p>
+      </form>
+    </div>
+
+    <div class="popup-thanks" id="popup-thanks" hidden>
+      <div class="tk">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" /></svg>
+      </div>
+      <h3>Got it — talk soon.</h3>
+      <p>We'll be in touch shortly with your free review audit.</p>
+    </div>
+  </div>
+</div>
+
+{turnstileSiteKey && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  const SUPPRESS_DAYS = 7;
+  const SUBMITTED_KEY = "rc_popup_submitted";
+  const SUPPRESS_UNTIL_KEY = "rc_popup_suppress_until";
+  const SESSION_SHOWN_KEY = "rc_popup_shown";
+  const EXIT_INTENT_CAPABLE = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const DELAY_MS = 20000;
+
+  const overlay = document.getElementById("audit-popup-overlay");
+  const modal = document.getElementById("audit-popup");
+  const closeBtn = document.getElementById("popup-close");
+  const form = document.getElementById("popup-form");
+  const formview = document.getElementById("popup-formview");
+  const thanks = document.getElementById("popup-thanks");
+  const submitBtn = document.getElementById("popup-submit");
+  const errorEl = document.getElementById("popup-error");
+
+  let lastFocused = null;
+  let shown = false;
+
+  function eligible() {
+    if (localStorage.getItem(SUBMITTED_KEY) === "1") return false;
+    const suppressUntil = Number(localStorage.getItem(SUPPRESS_UNTIL_KEY) || 0);
+    if (Date.now() < suppressUntil) return false;
+    if (sessionStorage.getItem(SESSION_SHOWN_KEY) === "1") return false;
+    return true;
+  }
+
+  function getFocusable() {
+    return [...modal.querySelectorAll('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])')].filter(
+      (el) => !el.hidden && el.offsetParent !== null
+    );
+  }
+
+  function trapFocus(event) {
+    if (event.key === "Escape") {
+      closePopup("dismiss");
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const focusable = getFocusable();
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  function openPopup() {
+    if (shown || !eligible()) return;
+    shown = true;
+    sessionStorage.setItem(SESSION_SHOWN_KEY, "1");
+    lastFocused = document.activeElement;
+    overlay.hidden = false;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", trapFocus);
+    const firstField = document.getElementById("pop-biz");
+    if (firstField) firstField.focus();
+  }
+
+  function closePopup(reason) {
+    overlay.hidden = true;
+    document.body.style.overflow = "";
+    document.removeEventListener("keydown", trapFocus);
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+    if (reason === "dismiss") {
+      const until = Date.now() + SUPPRESS_DAYS * 24 * 60 * 60 * 1000;
+      localStorage.setItem(SUPPRESS_UNTIL_KEY, String(until));
+    }
+  }
+
+  closeBtn.addEventListener("click", () => closePopup("dismiss"));
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) closePopup("dismiss");
+  });
+
+  // Triggers: desktop = exit-intent OR ~20s delay, whichever first.
+  // Mobile / touch devices = delay only, no exit-intent (avoids the
+  // intrusive-interstitial mobile penalty by never doing anything on touch
+  // beyond a plain centred, dismissible modal after a wait).
+  const delayTimer = setTimeout(openPopup, DELAY_MS);
+
+  if (EXIT_INTENT_CAPABLE) {
+    document.addEventListener("mouseout", function onExitIntent(event) {
+      if (event.clientY <= 0 && !event.relatedTarget) {
+        clearTimeout(delayTimer);
+        document.removeEventListener("mouseout", onExitIntent);
+        openPopup();
+      }
+    });
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    errorEl.hidden = true;
+
+    const data = new FormData(form);
+    const turnstileToken = data.get("cf-turnstile-response");
+
+    submitBtn.disabled = true;
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = "Sending…";
+
+    try {
+      const res = await fetch("/api/submit-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          businessName: data.get("businessName"),
+          name: data.get("name"),
+          phone: data.get("phone"),
+          email: data.get("email"),
+          turnstileToken,
+          source: "popup",
+        }),
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || "The form couldn't be submitted. Please try again.");
+
+      localStorage.setItem(SUBMITTED_KEY, "1");
+      formview.hidden = true;
+      thanks.hidden = false;
+    } catch (err) {
+      errorEl.textContent = err.message || "Something went wrong. Please try again.";
+      errorEl.hidden = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+      if (window.turnstile) window.turnstile.reset();
+    }
+  });
+</script>
+
+<style>
+  .popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(4, 44, 83, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+  }
+  .popup-modal {
+    position: relative;
+    background: #fff;
+    width: 100%;
+    max-width: 380px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 16px;
+    padding: 26px 24px;
+    box-shadow: 0 30px 60px -20px rgba(14, 59, 102, 0.45);
+  }
+  .popup-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: 0;
+    color: var(--muted);
+    cursor: pointer;
+    line-height: 1;
+    font-size: 26px;
+    padding: 6px;
+  }
+  .popup-close:hover { color: var(--ink); }
+  .popup-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .popup-brand-name { font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--brand); }
+  .popup-heading { font-family: var(--display); font-size: 1.4rem; line-height: 1.15; color: var(--ink); margin-bottom: 8px; }
+  .popup-sub { font-size: 0.9rem; color: var(--muted); line-height: 1.5; margin-bottom: 18px; }
+  .popup-consent { font-size: 0.78rem; color: var(--muted); line-height: 1.5; margin: 0 0 14px; }
+  .popup-consent a { color: var(--brand); text-decoration: underline; }
+  .popup-submit { width: 100%; justify-content: center; }
+  .popup-micro { text-align: center; font-size: 0.78rem; color: var(--muted); margin: 10px 0 0; }
+  .popup-error-text { margin-top: 10px; font-size: 0.82rem; color: #c0392b; text-align: center; }
+  .cf-turnstile { margin: 4px 0 14px; }
+
+  .popup-thanks { text-align: center; padding: 12px 0; }
+  .popup-thanks .tk { width: 54px; height: 54px; border-radius: 50%; background: rgba(27, 156, 107, 0.12); color: var(--pos); display: grid; place-items: center; margin: 0 auto 14px; }
+  .popup-thanks h3 { font-family: var(--display); font-size: 1.15rem; margin-bottom: 6px; }
+  .popup-thanks p { font-size: 0.9rem; color: var(--muted); }
+
+  @media (max-width: 420px) {
+    .popup-modal { padding: 22px 18px; }
+  }
+</style>

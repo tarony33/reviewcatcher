@@ -1,0 +1,30 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500&display=swap');
+.rc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.rc-body{font-family:'Figtree',sans-serif}
+.rc-h{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;letter-spacing:-0.02em}
+.rc-field label{display:block;font-size:13px;color:var(--text-secondary);margin-bottom:4px}
+.rc-field input{width:100%}
+.rc-btn{width:100%;background:#185FA5;color:#fff;border:0;border-radius:999px;padding:12px;font-family:'Figtree',sans-serif;font-weight:500;font-size:15px;cursor:pointer}
+.rc-close{position:absolute;top:14px;right:14px;background:none;border:0;color:var(--text-muted);cursor:pointer;line-height:1;font-size:20px}
+.rc-mark{width:30px;height:30px;border-radius:8px;background:#185FA5;display:flex;align-items:center;justify-content:center;color:#fff;flex:none}
+</style>
+<h2 class="rc-sr">Mockup of the ReviewCatcher website pop-up offering a free Google review audit, with a business name, name, phone, and email lead-capture form.</h2>
+<div style="min-height:470px;background:rgba(4,44,83,0.55);display:flex;align-items:center;justify-content:center;border-radius:12px;padding:1.25rem;">
+  <div class="rc-body" style="position:relative;background:var(--surface-2);width:100%;max-width:360px;border-radius:16px;padding:26px 24px;border:0.5px solid var(--border);">
+    <button class="rc-close" aria-label="Close"><i class="ti ti-x" aria-hidden="true"></i></button>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+      <span class="rc-mark"><i class="ti ti-star" aria-hidden="true" style="font-size:16px"></i></span>
+      <span class="rc-h" style="font-size:16px;color:#185FA5">ReviewCatcher</span>
+    </div>
+    <div class="rc-h" style="font-size:22px;color:var(--text-primary);line-height:1.15;margin-bottom:8px;">See where you rank on Google — free.</div>
+    <p style="font-size:14px;color:var(--text-secondary);margin:0 0 18px;line-height:1.5;">A quick review audit shows how you stack up against nearby competitors and how many reviews you're leaving on the table.</p>
+    <div class="rc-field" style="margin-bottom:12px;"><label>Business name</label><input type="text" placeholder="Rush Strength & Fitness"></div>
+    <div class="rc-field" style="margin-bottom:12px;"><label>Your name</label><input type="text" placeholder="John Murphy"></div>
+    <div class="rc-field" style="margin-bottom:12px;"><label>Contact number</label><input type="tel" placeholder="087 123 4567"></div>
+    <div class="rc-field" style="margin-bottom:16px;"><label>Email</label><input type="email" placeholder="you@business.ie"></div>
+    <p style="font-size:12px;color:var(--text-muted);margin:0 0 14px;line-height:1.5;">By submitting you agree to our <a href="#" style="color:#185FA5">privacy policy</a>. We never share your details.</p>
+    <button class="rc-btn">Get my free audit</button>
+    <p style="text-align:center;font-size:12px;color:var(--text-muted);margin:10px 0 0;">No commitment · usually a same-day callback</p>
+  </div>
+</div>

@@ -22,7 +22,9 @@ export async function onRequestPost({ request, env }) {
     return json({ error: "Invalid request body." }, 400);
   }
 
-  const { businessName, name, phone, email, turnstileToken } = body || {};
+  const { businessName, name, phone, email, turnstileToken, source } = body || {};
+  const KNOWN_SOURCES = ["website-lead-form", "popup"];
+  const leadSource = KNOWN_SOURCES.includes(source) ? source : "website-lead-form";
 
   if (!businessName || !email) {
     return json({ error: "Business name and email are required." }, 400);
@@ -62,7 +64,7 @@ export async function onRequestPost({ request, env }) {
       name,
       phone,
       email,
-      source: "website-lead-form",
+      source: leadSource,
       submittedAt: new Date().toISOString(),
     }),
   });

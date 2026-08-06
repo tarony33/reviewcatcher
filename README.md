@@ -13,6 +13,15 @@ JetBrains Mono) live in `src/styles/tokens.css`, the ported mockup CSS is in
 `src/styles/global.css`, and all business specifics (pricing tiers, towns,
 guarantee copy, FAQ) live in `src/config/site.config.ts`.
 
+`src/components/AuditPopup.astro` is the free-audit lead-capture popup
+(`spec/reviewcatcher-free-audit-popup-mockup.html`) — exit-intent (desktop)
+or a 20s delay (mobile/all), submits to the same `/api/submit-lead` function
+as the homepage form with `source: "popup"`, capped to once per session and
+suppressed 7 days after a dismiss (permanently after a submit). It's opt-in
+per page — only `index.astro` includes it. Add `<AuditPopup />` to a new
+page's own template if you want it there too; never add it to `checkout.astro`
+or the legal pages.
+
 ## Local dev
 
 Requires Node.js (LTS) and npm.

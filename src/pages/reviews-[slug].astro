@@ -1,0 +1,73 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import ProblemSection from "../components/ProblemSection.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import FeatureGrid from "../components/FeatureGrid.astro";
+import PricingTiers from "../components/PricingTiers.astro";
+import Guarantee from "../components/Guarantee.astro";
+import LeadForm from "../components/LeadForm.astro";
+import FAQ from "../components/FAQ.astro";
+import { siteConfig } from "../config/site.config";
+import { locations } from "../data/locations";
+
+export async function getStaticPaths() {
+  return locations.map((location) => ({
+    params: { slug: location.slug },
+    props: { location },
+  }));
+}
+
+const { location } = Astro.props;
+const description = `${siteConfig.name} helps businesses in ${location.name} get more Google reviews automatically, so you rank higher and win more local customers.`;
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Automated Google review management",
+  provider: { "@type": "ProfessionalService", name: siteConfig.name, url: siteConfig.url },
+  areaServed: { "@type": "City", name: location.name },
+  description,
+};
+
+const localBusinessLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: `${siteConfig.name} — ${location.name}`,
+  url: `${siteConfig.url}/reviews-${location.slug}/`,
+  areaServed: { "@type": "City", name: location.name },
+  parentOrganization: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+};
+---
+
+<Layout
+  title={`Get More Google Reviews in ${location.name} | ${siteConfig.name}`}
+  description={description}
+  jsonLd={[serviceLd, localBusinessLd]}
+>
+  <Header />
+  <main>
+    <section class="hero location-hero">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow">Automated Google reviews &middot; {location.name}</span>
+          <h1>Get more Google reviews in <span class="hl">{location.name}</span>.</h1>
+          <p class="sub">{location.blurb}</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="/#start">Get my free review audit &rarr;</a>
+            <a class="btn btn-ghost" href="/#offer">See pricing</a>
+          </div>
+          <div class="micro"><span class="dot"></span> No lock-in &middot; Cancel anytime &middot; 30-day review guarantee</div>
+        </div>
+      </div>
+    </section>
+
+    <ProblemSection />
+    <HowItWorks />
+    <FeatureGrid />
+    <PricingTiers />
+    <Guarantee />
+    <LeadForm />
+    <FAQ />
+  </main>
+</Layout>

@@ -73,14 +73,45 @@ on-page rather than relying on Stripe's own hosted Checkout page after
 redirect — Checkout itself already collects payment details, so this is
 optional polish, not a blocker.
 
+## Blog
+
+`src/content/blog/*.md` — an Astro content collection (schema in
+`src/content.config.ts`: `title`, `description`, `publishDate`, `author`,
+`slug`, `tags`, optional `faqs`). `/blog` lists posts newest-first;
+`/blog/[slug]` renders the body, an FAQ accordion when `faqs` is set
+(also injected as FAQPage JSON-LD alongside BlogPosting schema), a CTA
+block back to pricing/the free audit, and up to 3 related posts
+(shared-tag matches first). `/rss.xml` feeds the same collection via
+`@astrojs/rss`.
+
+The 3 seed posts are **stubs** — frontmatter and a placeholder paragraph
+only, so the templates are testable end-to-end. The brief referenced
+"titles 1-3 above" but no title list actually made it into the message I
+was given, so I picked 3 reasonable placeholder topics myself
+(`src/content/blog/*.md`) — swap the titles along with the real copy
+whenever it's ready; the slugs will change if the titles do, so update any
+external links accordingly.
+
+## Location pages
+
+`src/data/locations.ts` (name/slug/blurb) drives `src/pages/reviews-[slug].astro`
+— one page per city at `/reviews-dublin`, `/reviews-cork`, etc., reusing the
+homepage's own section components (problem, how-it-works, features, pricing,
+guarantee, lead form, FAQ) with a city-specific H1 + blurb + Service/LocalBusiness
+JSON-LD (`areaServed`). Linked from a new "Areas we serve" footer column.
+
+**Worth remembering** (raised before this brief, still true): these 5 pages
+are near-identical except for the hero blurb — exactly the thin/doorway-content
+pattern Google can penalize rather than reward, since the shared sections
+(problem, how-it-works, features, guarantee, FAQ) are byte-for-byte the same
+across all five. The blurbs give each page a little genuine distinction, but
+real differentiation — local proof points, city-specific examples, actual
+client results — is what determines whether these are worth indexing at
+scale or just useful as landing pages for city-targeted ads. Worth deciding
+deliberately (e.g. `noindex` until real content lands) rather than by default.
+
 ## What's still a TODO
 
-- Location pages (`/reviews-cork`, `/reviews-galway`, …) — **deliberately not
-  built.** A templated page that only swaps the town name won't rank for local
-  search (Google treats that as thin/doorway content) — it needs genuinely
-  unique content per town, which is a content decision, not a code one. The
-  homepage's Ireland-wide positioning + towns list covers this for now.
-  Revisit only once specific towns are picked worth writing real content for.
 - All legal pages are real content now: `privacy.astro`, `compliance.astro`,
   `ai-statement.astro`, `complaints.astro`, `contact.astro`, `terms.astro`
   (from `spec/reviewcatcher-legal-pages.md` + `spec/reviewcatcher-terms.md`)

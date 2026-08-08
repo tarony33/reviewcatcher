@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from "../config/site.config";
+import { locations } from "../data/locations";
 
 const legalLinks = [
   { href: "/privacy", label: "Privacy Policy" },
@@ -40,7 +41,13 @@ const year = new Date().getFullYear();
         <h4>Contact</h4>
         <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
         <a href="/#start">Request a call</a>
-        <a href="/">{siteConfig.areaServed}</a>
+        <a href="/blog">Blog</a>
+      </div>
+      <div>
+        <h4>Areas we serve</h4>
+        {locations.map((location) => (
+          <a href={`/reviews-${location.slug}/`}>{location.name}</a>
+        ))}
       </div>
     </div>
     <div class="foot-bottom">

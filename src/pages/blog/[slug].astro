@@ -1,0 +1,114 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import { siteConfig } from "../../config/site.config";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.data.slug },
+    props: { post, allPosts: posts },
+  }));
+}
+
+const { post, allPosts } = Astro.props;
+const { Content } = await render(post);
+const { title, description, publishDate, author, tags, faqs } = post.data;
+
+const canonicalPath = `/blog/${post.data.slug}/`;
+
+const blogPostingLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  datePublished: publishDate.toISOString(),
+  author: { "@type": "Organization", name: author },
+  publisher: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+  mainEntityOfPage: `${siteConfig.url}${canonicalPath}`,
+};
+
+const faqPageLd = faqs && faqs.length > 0
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
+    }
+  : null;
+
+const jsonLd = faqPageLd ? [blogPostingLd, faqPageLd] : [blogPostingLd];
+
+// Related posts: prefer shared tags, fall back to most recent others.
+const others = allPosts.filter((p) => p.data.slug !== post.data.slug);
+const tagMatches = others.filter((p) => p.data.tags.some((t) => tags.includes(t)));
+const related = [...tagMatches, ...others.filter((p) => !tagMatches.includes(p))]
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
+---
+
+<Layout title={`${title} | ${siteConfig.name} Blog`} description={description} jsonLd={jsonLd}>
+  <Header />
+  <main>
+    <article class="blog-post">
+      <div class="wrap">
+        <div class="blog-post-head">
+          <span class="eyebrow">Blog</span>
+          <h1>{title}</h1>
+          <div class="blog-post-meta">
+            <time datetime={publishDate.toISOString()}>
+              {publishDate.toLocaleDateString("en-IE", { year: "numeric", month: "long", day: "numeric" })}
+            </time>
+            <span>&middot;</span>
+            <span>{author}</span>
+          </div>
+        </div>
+
+        <div class="prose">
+          <Content />
+        </div>
+
+        {faqs && faqs.length > 0 && (
+          <section class="blog-faq">
+            <h2>Frequently asked questions</h2>
+            <div class="faq">
+              {faqs.map((item, i) => (
+                <details open={i === 0}>
+                  <summary>{item.question}<span class="plus">+</span></summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <div class="blog-cta">
+          <h3>Ready to get more Google reviews?</h3>
+          <p>See how {siteConfig.name} automates the ask, the follow-up, and the reply — or grab a free review audit first.</p>
+          <div class="blog-cta-actions">
+            <a class="btn btn-primary" href="/#start">Get my free audit</a>
+            <a class="btn btn-ghost" href="/#offer">See pricing</a>
+          </div>
+        </div>
+
+        {related.length > 0 && (
+          <section class="blog-related">
+            <h2>More from the blog</h2>
+            <div class="blog-related-list">
+              {related.map((p) => (
+                <a class="blog-related-card" href={`/blog/${p.data.slug}/`}>
+                  <h3>{p.data.title}</h3>
+                  <p>{p.data.description}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </article>
+  </main>
+</Layout>

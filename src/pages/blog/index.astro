@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import { siteConfig } from "../../config/site.config";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+
+const description = `Straight-talking guidance on Google reviews, local ranking, and reputation — from the team behind ${siteConfig.name}.`;
+---
+
+<Layout title={`Blog | ${siteConfig.name}`} description={description}>
+  <Header />
+  <main>
+    <section class="blog-index">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow">Blog</span>
+          <h1>Reviews, ranking, and reputation.</h1>
+          <p>{description}</p>
+        </div>
+        <div class="blog-list">
+          {posts.map((post) => (
+            <a class="blog-card" href={`/blog/${post.data.slug}/`}>
+              <time class="blog-card-date" datetime={post.data.publishDate.toISOString()}>
+                {post.data.publishDate.toLocaleDateString("en-IE", { year: "numeric", month: "long", day: "numeric" })}
+              </time>
+              <h2>{post.data.title}</h2>
+              <p>{post.data.description}</p>
+              <span class="blog-card-read">Read more &rarr;</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

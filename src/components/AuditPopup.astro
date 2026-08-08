@@ -218,6 +218,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
     justify-content: center;
     padding: 1.25rem;
   }
+  /* An author `display` rule always beats the UA stylesheet's [hidden]{display:none},
+     regardless of specificity, because origin is checked before specificity in the
+     cascade - so the bare `hidden` attribute alone did nothing here. This rule
+     restores it (same origin now, and more specific than the bare class above). */
+  .popup-overlay[hidden] {
+    display: none;
+  }
   .popup-modal {
     position: relative;
     background: #fff;
